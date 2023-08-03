@@ -1,6 +1,13 @@
 import React from 'react'
 
 export default function Billform() {
+
+  const initialFormValues = {
+    billName: '',
+    billAmount: '',
+    dueDate:''
+  }
+
   return (
     <form>
       <div>

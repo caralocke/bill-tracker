@@ -11,10 +11,7 @@ const Billform = (props) => {
     billAmount: '',
     dueDate:''
   });
-
-  const dispatch = useDispatch();
-  const bills = useSelector((state) => state.value);
-  
+ 
 
   const handleChange = (e) => {
     const type = e.target.type;
@@ -33,11 +30,12 @@ const Billform = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('bill', JSON.stringify(bill)); /*-----------------console.log here----------------- */
-    console.log('bills', JSON.stringify(bills)); /*-----------------console.log here----------------- */
-    dispatch(addBill({
+    // console.log('bills', JSON.stringify(bills)); /*-----------------console.log here----------------- */
+    props.addBill({
       ...bill,
       id: uuid
-    }))
+    })
+    // console.log('Billform.js bills', bills)
   }
 
   const { billName, billAmount, dueDate } = bill;
@@ -73,4 +71,4 @@ const Billform = (props) => {
   )
 }
 
-export default Billform;
+export default connect(null, {addBill})(Billform);

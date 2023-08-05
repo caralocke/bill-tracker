@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import { addBill } from '../features/billSlice';
 import { v4 as uuid} from 'uuid';
 
 
-export default function Billform() {
-  
+const Billform = (props) => {
+  console.log('Billform props', props)
   const [bill, setBill] = useState({
     billName: '',
     billAmount: '',
@@ -13,12 +13,12 @@ export default function Billform() {
   });
 
   const dispatch = useDispatch();
-  const bills = useSelector((state) => state.value)
+  const bills = useSelector((state) => state.value);
   
 
   const handleChange = (e) => {
     const type = e.target.type;
-    const name = e.target.name
+    const name = e.target.name;
 
     const value = type === 'checkbox' ? e.target.checked : e.target.value
 
@@ -32,8 +32,12 @@ export default function Billform() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('bill', JSON.stringify(bill)) /*-----------------console.log here----------------- */
-    console.log('bills', JSON.stringify(bills)) /*-----------------console.log here----------------- */
+    console.log('bill', JSON.stringify(bill)); /*-----------------console.log here----------------- */
+    console.log('bills', JSON.stringify(bills)); /*-----------------console.log here----------------- */
+    dispatch(addBill({
+      ...bill,
+      id: uuid
+    }))
   }
 
   const { billName, billAmount, dueDate } = bill;
@@ -68,3 +72,5 @@ export default function Billform() {
     </div>
   )
 }
+
+export default Billform;

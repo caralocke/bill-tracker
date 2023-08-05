@@ -1,8 +1,9 @@
 import './App.css';
-import Billform from './components/Billform.js';
+import Billform from './components/Billform';
 import CalendarComponent from './components/CalendarComponent';
 
-function App() {
+function App(props) {
+  console.log('App.js props', props)
   return (
     <div className="App">
       <Billform/>

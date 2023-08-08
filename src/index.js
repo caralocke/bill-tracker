@@ -7,9 +7,10 @@ import reducer from './reducers/billReducer';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { legacy_createStore as createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const store = createStore(reducer)
+const store = createStore(reducer, composeWithDevTools())
 root.render(
   <React.StrictMode>
     <Provider store={store}>

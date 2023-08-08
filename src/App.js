@@ -4,8 +4,8 @@ import CalendarComponent from './components/CalendarComponent';
 import { connect } from 'react-redux';
 
 const  App = props => {
-  console.log('App.js props', props)
-  console.log('App.js bills', props.state.bills)
+  // console.log('App.js props:', props)
+  // console.log('App.js bills:', props.state.bills)
   return (
     <div className="App">
       <Billform/>
@@ -24,3 +24,4 @@ const mapStateToProps = (state) => {
 const connectedApp = connect(mapStateToProps)(App)
 
 export default connectedApp;
+// export default App;

@@ -2,8 +2,7 @@ import { ADD_BILL, DELETE_BILL } from "../actions/billActions.js";
 import bills from './../data.js'
 
 const initialState = {
-  bills: bills,
-  appTitle: 'Bill Tracker'
+  bills: []
 }
 
 // const initialState = {
@@ -40,7 +39,7 @@ const reducer = (state = initialState, action) => {
       case ADD_BILL:
           return {
               ...state,
-              bills: [ ...state.bills, action.payload ]
+              bills: [...state.bills, action.payload]
           }    
       default:
           return state;

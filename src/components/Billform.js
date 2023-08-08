@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { addBill } from '../features/billSlice';
 import { v4 as uuid} from 'uuid';
-import bills from '../data';
+// import bills from '../data';
 
 const Billform = (props) => {
   useEffect(() => {
@@ -15,7 +15,6 @@ const Billform = (props) => {
     billName: '',
     billAmount: '',
     dueDate:'',
-    id: ''
   });
  
   const dispatch = useDispatch();
@@ -37,13 +36,18 @@ const Billform = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('bill to be added:', JSON.stringify(bill)); /*-----------------console.log here----------------- */
+    console.log('bill to be added:', bill); /*-----------------console.log here----------------- */
     // props.addBill({
     //   ...bills,
     //   id: Date.now(),
     // })
-    dispatch(addBill(bill));
-    console.log('all bills:', JSON.stringify(bills)); /*-----------------console.log here----------------- */
+    dispatch(addBill({
+      id: uuid(),
+      billName,
+      billAmount,
+      dueDate
+    }));
+    // console.log('all bills:', bills); /*-----------------console.log here----------------- */
     // console.log('Billform.js bills', bills)
   }
 
@@ -75,7 +79,7 @@ const Billform = (props) => {
       </div>
       <div className='bills-container'>
         <h3>Bills</h3>
-        {bills.forEach(bill => {
+        {/* {bills.forEach(bill => {
           return (
             <div className='bill'>
               Name: {billName}
@@ -83,7 +87,7 @@ const Billform = (props) => {
               Due Date: {dueDate}
             </div>
           )
-        })}
+        })} */}
       </div>
     </div>
   )
@@ -91,7 +95,6 @@ const Billform = (props) => {
 
 
 const mapStateToProps = (state) => {
-  console.log('App.js state', state)
   return {
     bills: state.bills
   }

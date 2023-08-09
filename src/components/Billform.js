@@ -98,12 +98,13 @@ const Billform = (props) => {
 }
 
 
-const mapStateToProps = (state) => {
-  console.log('billform state', state.bill.bills)
-  return {
-    bills: state.bill.bills
-  }
-}
+// const mapStateToProps = (state) => {
+//   console.log('billform state', state.bill.bills)
+//   return {
+//     bills: state.bill.bills
+//   }
+// }
 
 
-export default connect(mapStateToProps, {addBill})(Billform);
+// export default connect(mapStateToProps, {addBill})(Billform);
+export default Billform;

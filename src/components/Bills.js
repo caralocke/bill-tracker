@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux'
 
 
 export default function Bills() {
+
   const bills = useSelector(state => state.bill.bills);
+  
   return (
     <div className='bills-container'>
         <h3>Bills</h3>

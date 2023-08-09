@@ -63,3 +63,8 @@
   background-color: red;
   border-radius: 5px;
 }
+
+.bill-entry-container {
+  justify-content: center;
+}
+

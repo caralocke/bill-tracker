@@ -5,18 +5,24 @@ import { v4 as uuid} from 'uuid';
 // import bills from '../data';
 
 const Billform = (props) => {
-  useEffect(() => {
-    if (props) {
-      console.log('Billform props:', props)
-    }
-  }, [props]);
 
+  console.log('JSON', JSON.parse(localStorage.getItem('bills')))
+
+  const bills = useSelector((state) => state.bill.bills)
+  console.log('state bills', bills)
+
+  
   const [bill, setBill] = useState({
     billName: '',
     billAmount: '',
     dueDate:'',
   });
- 
+
+
+  useEffect(() => {
+    
+  }, [bills]);
+  
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -41,12 +47,12 @@ const Billform = (props) => {
     //   ...bills,
     //   id: Date.now(),
     // })
-    props.addBill({
+    dispatch(addBill({
       id: uuid(),
       billName,
       billAmount,
       dueDate
-    });
+    }));
     // console.log('all bills:', bills); /*-----------------console.log here----------------- */
     // console.log('Billform.js bills', bills)
   }
@@ -79,7 +85,7 @@ const Billform = (props) => {
       </div>
       <div className='bills-container'>
         <h3>Bills</h3>
-        {props.bills.map(bill => {
+        {bills.map(bill => {
           return (
             <div className='bill-container' key={bill.id}>
               <div>

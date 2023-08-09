@@ -7,7 +7,7 @@ import bills from "../data";
 //   dueDate: ''
 // }]
 const initialState = {
-  bills: bills
+   bills
 }
 
 

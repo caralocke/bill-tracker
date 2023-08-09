@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import bills from "../data";
 
-// const initialState = [{
-//   billName: '',
-//   billAmount: '',
-//   dueDate: ''
-// }]
 const initialState = {
    bills
 }

@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addBill } from '../features/billSlice';
 import { v4 as uuid} from 'uuid';
-// import bills from '../data';
 
-const Billform = (props) => {
-
+const Billform = () => {
 
   const storedBills = localStorage.getItem('bills');
   console.log('storedBills', storedBills)
 
-  const [allBills, setallBills] = useState(storedBills)
 
   const bills = useSelector((state) => state.bill.bills)
   console.log('state bills', bills)
@@ -41,20 +38,13 @@ const Billform = (props) => {
     
 
     setBill(bill => ({...bill, [name]: value}));
-    // setBill({
-    //   ...bill,
-    //   [e.target.name]: e.target.value
-    // })
   }
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('bill to be added:', bill); /*-----------------console.log here----------------- */
-    // props.addBill({
-    //   ...bills,
-    //   id: Date.now(),
-    // })
+
     dispatch(addBill({
       id: uuid(),
       billName,
@@ -63,12 +53,11 @@ const Billform = (props) => {
     }));
     localStorage.setItem('bills', JSON.stringify(bills))
     console.log('all bills:', bills); /*-----------------console.log here----------------- */
-    // console.log('Billform.js bills', bills)
   }
 
   
 
-  const { billName, billAmount, dueDate, id } = bill;
+  const { billName, billAmount, dueDate } = bill;
 
   return (
     <div>
@@ -97,14 +86,4 @@ const Billform = (props) => {
   )
 }
 
-
-// const mapStateToProps = (state) => {
-//   console.log('billform state', state.bill.bills)
-//   return {
-//     bills: state.bill.bills
-//   }
-// }
-
-
-// export default connect(mapStateToProps, {addBill})(Billform);
 export default Billform;

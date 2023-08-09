@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import bills from "../data";
 
-const initialState = [{
-  billName: '',
-  billAmount: '',
-  dueDate: ''
-}]
+// const initialState = [{
+//   billName: '',
+//   billAmount: '',
+//   dueDate: ''
+// }]
+const initialState = {
+  bills: bills
+}
 
 
 export const billSlice = createSlice({
@@ -12,12 +16,14 @@ export const billSlice = createSlice({
   initialState,
   reducers: {
     addBill: (state, action) => {
-      // state.value.push(action.payload)
-      console.log('state', state)
-      console.log('action.payload', action.payload)
+      state.bills.push(action.payload)
+      console.log('billSlice action.payload', action.payload)
+    },
+    deleteBill: (state, action) => {
+      state.bills.splice(action.payload, 1)
     }
   }
 })
 
-export const { addBill } = billSlice.actions;
+export const { addBill, deleteBill } = billSlice.actions;
 export default billSlice.reducer;

@@ -41,19 +41,19 @@ const Billform = (props) => {
     //   ...bills,
     //   id: Date.now(),
     // })
-    dispatch(addBill({
+    props.addBill({
       id: uuid(),
       billName,
       billAmount,
       dueDate
-    }));
+    });
     // console.log('all bills:', bills); /*-----------------console.log here----------------- */
     // console.log('Billform.js bills', bills)
   }
 
   
 
-  const { billName, billAmount, dueDate } = bill;
+  const { billName, billAmount, dueDate, id } = bill;
 
   return (
     <div>
@@ -79,15 +79,18 @@ const Billform = (props) => {
       </div>
       <div className='bills-container'>
         <h3>Bills</h3>
-        {/* {bills.forEach(bill => {
+        {props.bills.map(bill => {
           return (
-            <div className='bill'>
-              Name: {billName}
-              Amount: {billAmount}
-              Due Date: {dueDate}
+            <div className='bill-container' key={bill.id}>
+              <div>
+                <div>Name: {bill.billName}</div>
+                <div>Amount: ${bill.billAmount}</div>
+                <div>Due Date: {bill.dueDate}</div>
+              </div>
+              <button className='delete-button'>Delete</button>
             </div>
           )
-        })} */}
+        })}
       </div>
     </div>
   )
@@ -95,8 +98,9 @@ const Billform = (props) => {
 
 
 const mapStateToProps = (state) => {
+  console.log('billform state', state.bill.bills)
   return {
-    bills: state.bills
+    bills: state.bill.bills
   }
 }
 

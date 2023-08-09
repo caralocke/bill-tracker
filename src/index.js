@@ -6,11 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import reducer from './reducers/billReducer';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { legacy_createStore as createStore } from 'redux';
+import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import store from './app/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const store = createStore(reducer, composeWithDevTools())
+// const store = createStore(reducer, composeWithDevTools(applyMiddleware()))
 root.render(
   <React.StrictMode>
     <Provider store={store}>

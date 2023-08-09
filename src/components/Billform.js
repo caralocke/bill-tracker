@@ -6,7 +6,11 @@ import { v4 as uuid} from 'uuid';
 
 const Billform = (props) => {
 
-  console.log('JSON', JSON.parse(localStorage.getItem('bills')))
+
+  const storedBills = localStorage.getItem('bills');
+  console.log('storedBills', storedBills)
+
+  const [allBills, setallBills] = useState(storedBills)
 
   const bills = useSelector((state) => state.bill.bills)
   console.log('state bills', bills)
@@ -18,9 +22,13 @@ const Billform = (props) => {
     dueDate:'',
   });
 
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('bills'))
+    console.log('useEffect stored bills', bills)
+  },[])
 
   useEffect(() => {
-    
+    localStorage.setItem('bills', JSON.stringify(bills))
   }, [bills]);
   
   const dispatch = useDispatch();
@@ -53,7 +61,8 @@ const Billform = (props) => {
       billAmount,
       dueDate
     }));
-    // console.log('all bills:', bills); /*-----------------console.log here----------------- */
+    localStorage.setItem('bills', JSON.stringify(bills))
+    console.log('all bills:', bills); /*-----------------console.log here----------------- */
     // console.log('Billform.js bills', bills)
   }
 
@@ -83,21 +92,7 @@ const Billform = (props) => {
           <button>Submit</button>
         </form>
       </div>
-      <div className='bills-container'>
-        <h3>Bills</h3>
-        {bills.map(bill => {
-          return (
-            <div className='bill-container' key={bill.id}>
-              <div>
-                <div>Name: {bill.billName}</div>
-                <div>Amount: ${bill.billAmount}</div>
-                <div>Due Date: {bill.dueDate}</div>
-              </div>
-              <button className='delete-button'>Delete</button>
-            </div>
-          )
-        })}
-      </div>
+      
     </div>
   )
 }

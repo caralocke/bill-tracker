@@ -5,12 +5,13 @@ import { v4 as uuid} from 'uuid';
 
 const Billform = () => {
 
-  const storedBills = localStorage.getItem('bills');
-  console.log('storedBills', storedBills)
-
+  // const storedBills = JSON.parse(localStorage.getItem('bills'));
+  // console.log('storedBills', storedBills)
 
   const bills = useSelector((state) => state.bill.bills)
-  console.log('state bills', bills)
+  // console.log('state bills', stateBills)
+
+  // const [bills, setBills] = useState(storedBills)
 
   
   const [bill, setBill] = useState({
@@ -20,8 +21,9 @@ const Billform = () => {
   });
 
   useEffect(() => {
-    JSON.parse(localStorage.getItem('bills'))
-    console.log('useEffect stored bills', bills)
+    // JSON.parse(localStorage.getItem('bills'))
+    // localStorage.getItem('bills')
+    // console.log('useEffect stored bills', bills)
   },[])
 
   useEffect(() => {
@@ -51,8 +53,8 @@ const Billform = () => {
       billAmount,
       dueDate
     }));
-    localStorage.setItem('bills', JSON.stringify(bills))
-    console.log('all bills:', bills); /*-----------------console.log here----------------- */
+    // localStorage.setItem('bills', JSON.stringify(bills))
+    // console.log('all bills:', bills); /*-----------------console.log here----------------- */
   }
 
   

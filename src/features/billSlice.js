@@ -1,8 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import bills from "../data";
 
+const fetchBills = createAsyncThunk(
+  'bills/fetchBills',
+  async () => {
+     return fetch(`https://api-for-bills.onrender.com/api/v1/bills`)
+      .then((res) => {
+        let response = res.json()
+        return response
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+)
+
 const initialState = {
-   bills
+   bills: bills
 }
 
 

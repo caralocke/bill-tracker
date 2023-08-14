@@ -10,8 +10,8 @@ const  App = () => {
   return (
     <div className="App">
       <Billform/>
-      <Bills/>
       <CalendarComponent/>
+      <Bills/>
     </div>
   );
 }

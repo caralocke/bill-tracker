@@ -5,13 +5,11 @@ import { v4 as uuid} from 'uuid';
 
 const Billform = () => {
 
-  // const storedBills = JSON.parse(localStorage.getItem('bills'));
-  // console.log('storedBills', storedBills)
 
-  const bills = useSelector((state) => state.bill.bills)
-  // console.log('state bills', stateBills)
+  const billData = useSelector((state) => state.bill.bills)
+  const [bills, setBills] = useState(billData)
+  console.log('bills Billform.js', bills)
 
-  // const [bills, setBills] = useState(storedBills)
 
   
   const [bill, setBill] = useState({
@@ -21,14 +19,11 @@ const Billform = () => {
   });
 
   useEffect(() => {
-    // JSON.parse(localStorage.getItem('bills'))
-    // localStorage.getItem('bills')
-    // console.log('useEffect stored bills', bills)
+    setBills(billData)
+    console.log('bills inside useEffect Billform.js', billData)
   },[])
 
-  useEffect(() => {
-    localStorage.setItem('bills', JSON.stringify(bills))
-  }, [bills]);
+
   
   const dispatch = useDispatch();
 
@@ -45,7 +40,6 @@ const Billform = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('bill to be added:', bill); /*-----------------console.log here----------------- */
 
     dispatch(addBill({
       id: uuid(),
@@ -53,8 +47,6 @@ const Billform = () => {
       billAmount,
       dueDate
     }));
-    // localStorage.setItem('bills', JSON.stringify(bills))
-    // console.log('all bills:', bills); /*-----------------console.log here----------------- */
   }
 
   

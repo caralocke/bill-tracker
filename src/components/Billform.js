@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addBill } from '../features/billSlice';
+import { addBill, getBills } from '../features/billSlice';
 import { v4 as uuid} from 'uuid';
 
 const Billform = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState({billName: '', billAmount: '', dueDate: '' });
+    const bills = useSelector((state) => state.bill.bills)
+    console.log('Billform.js bills', bills)
+
+    const [newData, setNewData] = useState(bills)
+
+    useEffect(() => {
+      setNewData(bills)
+      console.log('newData', newData)
+    },[bills])
 
     const handleChange = (e) => {
       setInputValue({...inputValue, [e.target.name]: e.target.value})
@@ -14,6 +23,7 @@ const Billform = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       dispatch(addBill(inputValue))
+      console.log('handleSubmit inputValue', inputValue)
     }
   
 

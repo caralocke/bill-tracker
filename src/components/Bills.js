@@ -2,17 +2,18 @@ import React, { useEffect } from 'react'
 import { useSelector, getState, useDispatch } from 'react-redux'
 import { useState } from 'react'
 import axios from 'axios';
-import { getBills } from '../features/billSlice'
+import { getBills, deleteBill } from '../features/billSlice'
 
 
 export default function Bills() {
 
   const dispatch = useDispatch();
   const bills = useSelector((state) => state.bill.bills)
+  console.log('Bills.js bills', bills)
 
   useEffect(() => {
     dispatch(getBills())
-  }, [])
+  }, []);
 
 
   return (
@@ -26,7 +27,7 @@ export default function Bills() {
                 <div>Amount: ${bill.billAmount}</div>
                 <div>Due Date: {bill.dueDate}</div>
               </div>
-              <button className='delete-button'>Delete</button>
+              <button onClick={()=>dispatch(deleteBill(bill.id))} className='delete-button'>Delete</button>
             </div>
           )
         })}

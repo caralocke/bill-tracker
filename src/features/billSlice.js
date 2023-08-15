@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { act } from "react-dom/test-utils";
 import {v4 as uuid} from 'uuid';
  
 
@@ -16,13 +17,13 @@ export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
 
 
 export const addBill = createAsyncThunk('bills/addBills', async(values) => {
-     return fetch('https://api-for-bills.onrender.com/api/v1/bills', { method:"POST",
+     return await fetch('https://api-for-bills.onrender.com/api/v1/bills', { method:"POST",
      headers: {
       "Content-Type": "application/json", 
       "Accept": "application/json"
      },
      body: JSON.stringify({
-      id: uuid(),
+      id: Math.random(),
       billName: values.billName,
       billAmount: values.billAmount,
       dueDate: values.dueDate
@@ -36,6 +37,22 @@ export const addBill = createAsyncThunk('bills/addBills', async(values) => {
     }
 )
 
+export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAPI) => {
+  console.log(`deleting bill with id:`, id);
+    await axios.delete(`https://api-for-bills.onrender.com/api/v1/bills/${id}`, {
+    headers: {
+      "Content-Type": "application/json", 
+      "Accept": "application/json"
+     },
+     body: {
+      id
+     }
+    })
+    .then((res) => {
+      console.log('deleteBill res', res)
+    })
+})
+
 
 
 
@@ -48,11 +65,7 @@ export const billSlice = createSlice({
     error: '',
     isSuccess: ''
   },
-  reducers: {
-    deleteBill: (state, action) => {
-      state.bills.splice(action.payload, 1)
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(getBills.pending, state => {
       state.loading = true
@@ -79,9 +92,30 @@ export const billSlice = createSlice({
       state.loading = false
       state.bills = []
       state.error = action.error.message
+    });
+
+    builder.addCase(deleteBill.pending, state => {
+      state.loading = true
+    });
+
+    builder.addCase(deleteBill.fulfilled, (state, action) => {
+      const billId = action.payload
+      state.bills = state.bills.filter(bill => bill.id !== billId)
+      state.loading = false
+      state.isSuccess = action.payload
+    });
+
+    builder.addCase(deleteBill.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message
     })
   }
 })
 
-export const {  deleteBill, selectAllBills, retreiveBills } = billSlice.actions;
+export const { selectAllBills, retreiveBills } = billSlice.actions;
 export default billSlice.reducer;
+
+
+// deleteBill: (state, action) => {
+//   state.bills.splice(action.payload, 1)
+// },

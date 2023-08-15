@@ -30,7 +30,7 @@ export const addBill = createAsyncThunk('bills/addBills', async(values) => {
      })
     }).then((res) => {
       console.log('res', res)
-      res.json()
+      // res.json()
     }).catch((err) => {
       console.log('err', err)
     })

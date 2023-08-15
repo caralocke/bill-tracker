@@ -15,6 +15,11 @@ export default function Bills() {
     dispatch(getBills())
   }, []);
 
+  // const handleClick = (e, bill) => {
+  //   dispatch(deleteBill(bill.id))
+  //   dispatch(getBills())
+  // }
+
 
   return (
     <div className='bills-container'>

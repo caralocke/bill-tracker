@@ -8,11 +8,10 @@ const initialState = {
 const getBills = createAsyncThunk(
   'bills/getBills',
   async (thunkAPI) => {
-    const response = await fetch('https://api-for-bills.onrender.com/api/v1/bills')
+    const response = await fetch(process.env.BASE_URL)
       .then((data) => {
         return data.json()
       })
-    console.log('bills/getBills response.data', response)
     return response
 })
 

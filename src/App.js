@@ -1,12 +1,14 @@
 import './App.css';
-import Billform from './components/Billform.js';
-import Bills from './components/Bills';
+import Billform from './components/Billform';
 import CalendarComponent from './components/CalendarComponent';
-function App() {
+import Bills from './components/Bills';
+
+const  App = () => {
   return (
     <div className="App">
       <Billform/>
       <CalendarComponent/>
+      <Bills/>
     </div>
   );
 }

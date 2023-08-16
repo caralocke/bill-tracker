@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+
+
+.bills-container {
+  justify-content: center;
+  padding: 50px;
+}
+
+.bill-container {
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 1px solid rgb(199, 196, 198);
+  height: 100px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.delete-button {
+  background-color: red;
+  border-radius: 5px;
+}
+
+.bill-entry-container {
+  justify-content: center;
+}
+

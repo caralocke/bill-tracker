@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addBill, getBills } from '../features/billSlice';
-import axios from 'axios';
-import { v4 as uuid} from 'uuid';
 
 const Billform = () => {
     const dispatch = useDispatch();

@@ -31,12 +31,13 @@ export const addBill = createAsyncThunk('bills/addBills', async(values) => {
       dueDate: values.dueDate
      })
     }).then((res) => {
+      console.log('addBill res', res);
       res.json();
     }).catch((err) => {
-      console.log('err', err)
-    })
+      console.log('err', err);
+    });
     }
-)
+);
 
 export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAPI) => {
   console.log(`deleting bill with id:`, id);
@@ -50,8 +51,8 @@ export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAP
      }
     })
     .then((res) => {
-      console.log('deleteBill res', res)
-    })
+      console.log('deleteBill res', res);
+    });
 });
 
 

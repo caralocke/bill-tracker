@@ -9,17 +9,14 @@ export default function Bills() {
 
   const dispatch = useDispatch();
   const bills = useSelector((state) => state.bill.bills);
-  const [newBills, setNewBills] = useState(bills)
-  console.log('Bills.js bills',Date.now(), bills);
-  const waitTime = 5000;
-  const { REACT_APP_BASE_URL } = process.env
 
-  useEffect(() => {
-      dispatch(getBills());
-  }, []);
+  // useEffect(() => {
+  //     dispatch(getBills());
+  // }, []);
 
   const handleClick = (id) => {
-    dispatch(deleteBill(id))
+    dispatch(deleteBill(id));
+    dispatch(getBills());
   }
 
 

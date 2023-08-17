@@ -22,12 +22,16 @@ const  App = () => {
   return (
     <div className="App">
       <Navbar/>
-      <Routes>
-        <Route exact path="/" element={<><Billform/><CalendarComponent/></>}/>          
-        <Route exact path='/bills' element={<Bills/>}/>        
-      </Routes>
+      <Billform/>
+      <CalendarComponent/>
+      <Bills/>
     </div>
   );
 }
 
 export default App;
+
+/* <Routes>
+        <Route exact path="/" element={<><Billform/><CalendarComponent/></>}/>          
+        <Route exact path='/bills' element={<Bills/>}/>        
+      </Routes> */

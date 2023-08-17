@@ -25,6 +25,13 @@ const Billform = () => {
       e.preventDefault();
       dispatch(addBill(inputValue))
       setInputValue(initialFormValues)
+      dispatch(getBills())
+      .unwrap()
+      .then((res) => {
+        console.log('handleSubmit res', res)
+        setNewData(res.data)
+        console.log('handleSubmit newData', newData)
+      })
       navigate('/bills')
     }
   

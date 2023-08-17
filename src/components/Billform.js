@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Billform = () => {
     const dispatch = useDispatch();
-    const [inputValue, setInputValue] = useState({billName: '', billAmount: '', dueDate: '' });
+    const initialFormValues = {billName: '', billAmount: '', dueDate: '' }
+    const [inputValue, setInputValue] = useState(initialFormValues);
     const bills = useSelector((state) => state.bill.bills)
     const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const Billform = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       dispatch(addBill(inputValue))
+      setInputValue(initialFormValues)
       navigate('/bills')
     }
   
@@ -33,20 +35,14 @@ const Billform = () => {
         <div>
           <h3>Add a New Bill</h3>
           <form onSubmit={handleSubmit}>
-            <div>
-              <label>Bill Name:
+            <div>              
                 <input type='text' value={inputValue.billName} onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>
-              </label>
             </div>
             <div>
-              <label>Amount:
                 <input type='text' value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
-              </label>
             </div>
             <div>
-              <label>Due Date:
                 <input type='date' value={inputValue.dueDate} onChange={handleChange} name="dueDate" id='dueDate'/>
-              </label>
             </div>
             <button>Submit</button>
           </form>

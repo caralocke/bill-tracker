@@ -12,7 +12,6 @@ export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
       }
     })
       .then(res=> {
-        console.log('getting data!', res.data)
         return res.data;
       })
       .catch(err=>err)

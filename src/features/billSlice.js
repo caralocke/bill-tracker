@@ -53,9 +53,7 @@ export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAP
     .then((res) => {
       console.log('deleteBill res', res)
     })
-})
-
-
+});
 
 
 

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addBill, getBills } from '../features/billSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Billform = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState({billName: '', billAmount: '', dueDate: '' });
     const bills = useSelector((state) => state.bill.bills)
-    console.log('Billform.js bills', bills)
+    const navigate = useNavigate();
 
     const [newData, setNewData] = useState(bills)
 
@@ -22,7 +23,7 @@ const Billform = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       dispatch(addBill(inputValue))
-      console.log('handleSubmit inputValue', inputValue)
+      navigate('/bills')
     }
   
 

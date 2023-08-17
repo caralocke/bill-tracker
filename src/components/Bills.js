@@ -15,22 +15,11 @@ export default function Bills() {
   const { REACT_APP_BASE_URL } = process.env
 
   useEffect(() => {
-    // const id = setInterval(() => {
-    //   axios.get(`${REACT_APP_BASE_URL}`)
-    //   .then((res) => {
-    //     setNewBills(res.data)
-    //   })
-    //   .catch((err) => {
-    //     console.log('err', err)
-    //   })
-    // }, waitTime);
-    // return () => clearInterval(id);
-    dispatch(getBills());
+      dispatch(getBills());
   }, []);
 
   const handleClick = (id) => {
     dispatch(deleteBill(id))
-    dispatch(getBills())
   }
 
 

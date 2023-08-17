@@ -68,3 +68,19 @@
   justify-content: center;
 }
 
+.home-button, .bills-button {
+  border: 1px solid gray;
+  padding: 5px;
+  border-radius: 10%;
+}
+.links {
+  padding-top: 5px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  background-color: #555658;
+}
+

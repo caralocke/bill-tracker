@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, Fragment, useState, useMemo } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
@@ -27,9 +27,7 @@ export default function CalendarComponent() {
       start: new Date(bill.dueDate),
       end: new Date(bill.dueDate)
     }
-    console.log('newData', newData)
     setEvents((prevData) => [...prevData, newData]);
-    console.log('myEvents inside useEffect', myEvents)
   })
  },[billData])
 

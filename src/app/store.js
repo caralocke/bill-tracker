@@ -1,4 +1,4 @@
-import { configureStore, applyMiddleware, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import billReducer from '../features/billSlice';
 import eventReducer from '../features/eventSlice'
 import { devToolsEnhancer } from "redux-devtools-extension";

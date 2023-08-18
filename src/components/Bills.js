@@ -1,18 +1,12 @@
-import React, { useEffect } from 'react'
-import { useSelector, getState, useDispatch } from 'react-redux'
-import { useState } from 'react'
-import axios from 'axios';
-import { getBills, deleteBill } from '../features/billSlice'
+import React, { useEffect } from 'react';
+import { useSelector, getState, useDispatch } from 'react-redux';
+import { getBills, deleteBill } from '../features/billSlice';
 
 
 export default function Bills() {
 
   const dispatch = useDispatch();
   const bills = useSelector((state) => state.bill.bills);
-
-  // useEffect(() => {
-  //     dispatch(getBills());
-  // }, []);
 
   const handleClick = async (id) => {
     let result = await dispatch(deleteBill(id));

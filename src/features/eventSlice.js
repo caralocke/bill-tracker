@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import events from "../data";
 
-const initialState = events;
+const initialState = {
+  events: events
+};
 
 const eventSlice = createSlice({
   name: 'events',

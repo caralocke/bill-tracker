@@ -5,16 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Billform = () => {
     const dispatch = useDispatch();
-    const initialFormValues = {billName: '', billAmount: '', dueDate: '' }
+    const initialFormValues = {billName: '', billAmount: '', dueDate: '' };
     const [inputValue, setInputValue] = useState(initialFormValues);
-    const bills = useSelector((state) => state.bill.bills)
+    const bills = useSelector((state) => state.bill.bills);
     const navigate = useNavigate();
-
     const [newData, setNewData] = useState(bills)
 
     useEffect(() => {
       setNewData(bills)
-      console.log('newData', newData)
     },[bills])
 
     const handleChange = (e) => {
@@ -28,10 +26,9 @@ const Billform = () => {
       dispatch(getBills())
       .unwrap()
       .then((res) => {
-        console.log('handleSubmit res', res)
-        setNewData(res.data)
-        console.log('handleSubmit newData', newData)
+        setNewData(res.data);
       })
+      navigate('/bills');
     }
   
 

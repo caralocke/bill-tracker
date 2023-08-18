@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { act } from "react-dom/test-utils";
-import {v4 as uuid} from 'uuid';
 const { REACT_APP_BASE_URL } = process.env;
 
 export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
@@ -31,7 +29,6 @@ export const addBill = createAsyncThunk('bills/addBills', async(values) => {
       dueDate: values.dueDate
      })
     }).then((res) => {
-      console.log('addBill res', res);
       res.json();
     }).catch((err) => {
       console.log('err', err);
@@ -40,7 +37,6 @@ export const addBill = createAsyncThunk('bills/addBills', async(values) => {
 );
 
 export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAPI) => {
-  console.log(`deleting bill with id:`, id);
     await axios.delete(`${REACT_APP_BASE_URL}/${id}`, {
     headers: {
       "Content-Type": "application/json", 
@@ -51,7 +47,7 @@ export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAP
      }
     })
     .then((res) => {
-      console.log('deleteBill res', res);
+      res.json();
     });
 });
 

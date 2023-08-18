@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import events from '../data'
+// import events from '../data'
 
 const weeklyEvents = [
   {
@@ -25,6 +25,7 @@ const localizer = momentLocalizer(moment);
 
 export default function CalendarComponent() {
   const bills = useSelector((state)=>state.bill.bills);
+  const events = useSelector((state) => state.event.events)
   const [ billData, setBillData ] = useState(bills);
   const [ myEvents, setEvents ] = useState(events);
   const [ weeklyEvents, setWeeklyEvents ] = useState([]);
@@ -50,17 +51,13 @@ export default function CalendarComponent() {
     setBillData(bills)
   }, [bills]);
 
-  useEffect(() => {
-    addEvent(totalDue)
-  }, [totalDue])
-
  useEffect(() => {
   billData.forEach((bill) => {
     let newData = {
       id: bill.id,
       title: `${bill.billName}: $${bill.billAmount}`,
-      start: new Date(bill.dueDate),
-      end: new Date(bill.dueDate)
+      start: moment().format(bill.dueDate),
+      end: moment().format(bill.dueDate)
     }
     addEvent(newData);
   })
@@ -69,9 +66,9 @@ export default function CalendarComponent() {
 
  useEffect(() => {
    billData.forEach((bill) => {
-    let date = Date.parse(bill.dueDate)
-    const start = Date.parse('2023-08-27')
-    const end = Date.parse('2023-09-02')
+    let date = moment().format(bill.dueDate)
+    const start = moment().format('2023-08-27')
+    const end = moment().format('2023-09-02')
     if (date >= start && date <= end){
       addWeeklyEvent(bill)
     }
@@ -80,19 +77,35 @@ export default function CalendarComponent() {
 
  useEffect(() => {
   let total = 0;
-  weeklyEvents.forEach((event) => {
+  // let events = weeklyEvents;
+  // for (const event of events) {
+  //   total += Number(event.billAmount);
+  //   let totalOfEvents = {
+  //     id: event.id,
+  //     title: `Total: $${total}`,
+  //     start: new Date(2023, 7, 27),
+  //     end: new Date(2023, 7, 27)
+  //   }
+  //   addEvent(totalDue)
+  // }
+  weeklyEvents.forEach((event)  => {
    console.log('event', event)
    total += Number(event.billAmount);
    console.log('total:', total)
    let totalOfEvents ={
     id: event.id,
-    title: `Total this week: $${total}`,
+    title: `$${total}`,
     start: new Date(2023, 7, 27),
     end: new Date(2023, 7, 27)
    }
    addTotalDue(totalOfEvents)
   })
  },[weeklyEvents])
+ 
+
+ useEffect(() => {
+  addEvent(totalDue)
+ }, [totalDue])
  
 
  

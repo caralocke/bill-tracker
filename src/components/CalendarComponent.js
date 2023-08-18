@@ -23,7 +23,7 @@ export default function CalendarComponent() {
   billData.forEach((bill) => {
     let newData = {
       id: bill.id,
-      title: bill.billName,
+      title: `${bill.billName} is $${bill.billAmount}`,
       start: new Date(bill.dueDate),
       end: new Date(bill.dueDate)
     }

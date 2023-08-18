@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getBills, deleteBill } from '../features/billSlice';
 
@@ -10,6 +10,10 @@ export default function Bills() {
   const [data, setData] = useState(bills);
   console.log('bills.js bills', bills)
   console.log('bills.js data', data)
+
+  useEffect(() => {
+    setData(bills)
+  },[bills])
 
   const handleClick = async (id) => {
     let result = await dispatch(deleteBill(id));

@@ -19,6 +19,8 @@ const Billform = () => {
       setInputValue({...inputValue, [e.target.name]: e.target.value})
     }
 
+    
+    
     const handleSubmit = async (e) => {
       e.preventDefault();
       let result = await dispatch(addBill(inputValue))
@@ -49,6 +51,7 @@ const Billform = () => {
             </div>
             <button>Submit</button>
           </form>
+          <div className='added-message'></div>
         </div>
       </div>
       

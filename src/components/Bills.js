@@ -9,29 +9,32 @@ export default function Bills() {
 
   const dispatch = useDispatch();
   const bills = useSelector((state) => state.bill.bills);
+  const [data, setData] = useState(bills);
+  console.log('bills.js bills', bills)
+  console.log('bills.js data', data)
 
-  // useEffect(() => {
-  //     dispatch(getBills());
-  // }, []);
+  useEffect(() => {
+    setData(bills)
+  }, [bills])
 
-  const handleClick = (id) => {
-    dispatch(deleteBill(id));
-    dispatch(getBills());
+  const handleClick = async (id) => {
+    let result = await dispatch(deleteBill(id));
+    dispatch(getBills())
   }
 
 
   return (
     <div className='bills-container'>
         <h3>Bills</h3>
-        {bills.map(bill => {
+        {data.map(data => {
           return (
-            <div className='bill-container' key={bill.id}>
+            <div className='bill-container' key={data.id}>
               <div>
-                <div>Name: {bill.billName}</div>
-                <div>Amount: ${bill.billAmount}</div>
-                <div>Due Date: {bill.dueDate}</div>
+                <div>Name: {data.billName}</div>
+                <div>Amount: ${data.billAmount}</div>
+                <div>Due Date: {data.dueDate}</div>
               </div>
-              <button onClick={()=>handleClick(bill.id)} className='delete-button'>Delete</button>
+              <button onClick={()=>handleClick(data.id)} className='delete-button'>Delete</button>
             </div>
           )
         })}

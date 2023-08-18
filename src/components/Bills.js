@@ -14,8 +14,8 @@ export default function Bills() {
   //     dispatch(getBills());
   // }, []);
 
-  const handleClick = (id) => {
-    dispatch(deleteBill(id));
+  const handleClick = async (id) => {
+    let result = await dispatch(deleteBill(id));
     dispatch(getBills());
   }
 

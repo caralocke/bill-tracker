@@ -21,9 +21,9 @@ const Billform = () => {
       setInputValue({...inputValue, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      dispatch(addBill(inputValue))
+      let result = await dispatch(addBill(inputValue))
       setInputValue(initialFormValues)
       dispatch(getBills())
       .unwrap()
@@ -32,7 +32,6 @@ const Billform = () => {
         setNewData(res.data)
         console.log('handleSubmit newData', newData)
       })
-      navigate('/bills')
     }
   
 

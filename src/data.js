@@ -1,16 +1,17 @@
-let bills = [
+let events = [
   {
     id: 0,
-    billName: 'truck',
-    billAmount: '500.00',
-    dueDate: '2023-08-17'
+    title: 'All Day Event very long title',
+    allDay: true,
+    start: new Date(2015, 3, 0),
+    end: new Date(2015, 3, 1),
   },
   {
     id: 1,
-    billName: 'mortgage',
-    billAmount: '1200.00',
-    dueDate: '2023-08-01'
-  }
+    title: 'Long Event',
+    start: new Date(2015, 3, 7),
+    end: new Date(2015, 3, 10),
+  },
 ];
 
-export default bills;
+export default events;

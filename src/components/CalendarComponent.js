@@ -1,30 +1,74 @@
-import React from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import { useState } from 'react';
+import React, { useEffect, useCallback, Fragment, useState, useMemo } from 'react';
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import events from '../data'
 
 const localizer = momentLocalizer(moment);
 
 export default function CalendarComponent() {
+  const [myEvents, setEvents] = useState(events);
+  console.log('myEvents', myEvents);
 
   const bills = useSelector((state)=>state.bill.bills);
   console.log('calendar bills', bills);
-  
-  // const [date, setDate] = useState(new Date());
-  
-  // bills.forEach(bill =>{
-  //   if (bill.dueDate === date) {
-  //   }
-  // });
+  const [billData, setBillData] = useState(bills);
+  console.log('billData calendar', billData);
+  useEffect(() => {
+    setBillData(bills)
+  }, [bills]);
+
+ useEffect(() => {
+  billData.forEach((bill) => {
+    let newData = {
+      id: bill.id,
+      title: `${bill.billName} is $${bill.billAmount}`,
+      start: new Date(bill.dueDate),
+      end: new Date(bill.dueDate)
+    }
+    console.log('newData', newData)
+    setEvents((prevData) => [...prevData, newData]);
+    console.log('myEvents inside useEffect', myEvents)
+  })
+ },[billData])
+
+
+
+  const handleSelectSlot = useCallback(
+    ({ start, end }) => {
+      const title = window.prompt('New Event name')
+      if (title) {
+        setEvents((prev) => [...prev, { start, end, title }])
+      }
+    },
+    [setEvents]
+  )
+
+  const handleSelectEvent = useCallback(
+    (event) => window.alert(event.title),
+    []
+  )
+
+  const { defaultDate, scrollToTime } = useMemo(
+    () => ({
+      defaultDate: new Date(),
+      scrollToTime: new Date(1970, 1, 1, 6),
+    }),
+    []
+  )
+
   return (
       <div className='calendar-container'>
         <Calendar 
-          localizer={localizer} 
-          startAccessor="startDate" 
-          endAccessor="endDate" 
-          defaultDate={moment().toDate()}
+           defaultDate={defaultDate}
+           defaultView={Views.MONTH}
+           events={myEvents}
+           localizer={localizer}
+           onSelectEvent={handleSelectEvent}
+           onSelectSlot={handleSelectSlot}
+           selectable
+           scrollToTime={scrollToTime}
           />
       </div>
   )

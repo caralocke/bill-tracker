@@ -15,23 +15,28 @@ const  App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     setBillData(dispatch(getBills()));
-    console.log('App.js bills inside useEffect:', bills)
-  }, [])
+  }, []);
+
+  const events = useSelector((state) => state.event.events);
+  const [eventsData, setEventsData] = useState([]);
+  useEffect(() => {
+    setEventsData(events)
+    console.log('eventsData', eventsData)
+  }, []);
+  console.log('events', events)
+
 
 
   return (
     <div className="App">
       <Navbar/>
-      <Billform/>
-      <CalendarComponent/>
-      <Bills/>
+      <Routes>
+        <Route exact path="/" element={<><Billform/><CalendarComponent/></>}/>          
+        <Route exact path='/bills' element={<Bills/>}/>        
+      </Routes> 
     </div>
   );
 }
 
 export default App;
 
-/* <Routes>
-        <Route exact path="/" element={<><Billform/><CalendarComponent/></>}/>          
-        <Route exact path='/bills' element={<Bills/>}/>        
-      </Routes> */

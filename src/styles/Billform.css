@@ -1,13 +1,38 @@
 .form-container {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
-}
-
-.form {
-  border: 1px solid gray;
+  padding-bottom: 5%;
+  padding-top: 2%;
+  font-family: sans-serif;
 }
 
 .billname-input {
   border: .5px solid gray;
+  width: 150px;
+}
+
+.billamount-input {
+  border: .5px solid gray;
+  width: 150px;
+}
+
+.date-input {
+  border: .5px solid gray;
+  width: 153px;
+}
+
+.billname-box {
+  padding: 2px;
+}
+
+.billamount-box {
+  padding: 2px;
+}
+
+.duedate-box {
+  padding: 2px;
+}
+
+.submit-button {
+  
 }

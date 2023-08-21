@@ -21,9 +21,7 @@ const  App = () => {
   const [eventsData, setEventsData] = useState([]);
   useEffect(() => {
     setEventsData(events)
-    console.log('eventsData', eventsData)
   }, []);
-  console.log('events', events)
 
 
 

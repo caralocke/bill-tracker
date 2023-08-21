@@ -3,13 +3,14 @@ import axios from "axios";
 const { REACT_APP_BASE_URL } = process.env;
 
 export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
-    return axios.get(`${REACT_APP_BASE_URL}`, {
+    return axios.get(`${REACT_APP_BASE_URL}/api/v1/bills`, {
       headers: {
         "Content-Type" : "application/json",
         "Accept" : "application/json"
       }
     })
       .then(res=> {
+        console.log('get res', res)
         return res.data;
       })
       .catch(err=>err)
@@ -17,7 +18,7 @@ export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
 
 
 export const addBill = createAsyncThunk('bills/addBills', async(values) => {
-     return await fetch(`${REACT_APP_BASE_URL}`, { method:"POST",
+     return await fetch(`${REACT_APP_BASE_URL}/api/v1/bills`, { method:"POST",
      headers: {
       "Content-Type": "application/json", 
       "Accept": "application/json"
@@ -37,7 +38,7 @@ export const addBill = createAsyncThunk('bills/addBills', async(values) => {
 );
 
 export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAPI) => {
-    await axios.delete(`${REACT_APP_BASE_URL}/${id}`, {
+    await axios.delete(`${REACT_APP_BASE_URL}/api/v1/bills/${id}`, {
     headers: {
       "Content-Type": "application/json", 
       "Accept": "application/json"

@@ -30,6 +30,7 @@ export default function CalendarComponent() {
   const [ myEvents, setEvents ] = useState(events);
   const [ weeklyEvents, setWeeklyEvents ] = useState([]);
   const [ totalDue, setTotalDue ] = useState([]);
+  console.log('myevents', myEvents)
 
   const addEvent = (event) => {
     setEvents((prevData) => [...prevData, event])
@@ -53,7 +54,8 @@ export default function CalendarComponent() {
       id: bill.id,
       title: `${bill.billName}: $${bill.billAmount}`,
       start: moment().format(bill.dueDate),
-      end: moment().format(bill.dueDate)
+      end: moment().format(bill.dueDate),
+      hexColor: '00FFFF',
     }
     addEvent(newData);
   })
@@ -81,7 +83,7 @@ export default function CalendarComponent() {
     allDay: true,
     start: moment().startOf('week'),
     end: moment().startOf('week'),
-    hexColor: 'AAFF00'
+    hexColor: '50C878'
    }
    addTotalDue(totalOfEvents)
   })
@@ -116,7 +118,7 @@ export default function CalendarComponent() {
     ({ start, end }) => {
       const title = window.prompt('New Event name')
       if (title) {
-        setEvents((prev) => [...prev, { start, end, title }])
+        setEvents((prev) => [...prev, { start, end, title }]);
       }
     },
     [setEvents]
@@ -135,19 +137,26 @@ export default function CalendarComponent() {
     []
   )
 
-  return (
+  
+   if (myEvents.length === 0) {
+    return (
+      <div>Please add a bill</div>
+    )
+   } else {
+    return (
       <div className='calendar-container'>
-        <Calendar 
-           defaultDate={defaultDate}
-           defaultView={Views.MONTH}
-           events={myEvents}
-           localizer={localizer}
-           onSelectEvent={handleSelectEvent}
-           onSelectSlot={handleSelectSlot}
-           selectable
-           eventPropGetter={eventStyleGetter}
-           scrollToTime={scrollToTime}
-          />
-      </div>
-  )
+      <Calendar 
+         defaultDate={defaultDate}
+         defaultView={Views.MONTH}
+         events={myEvents}
+         localizer={localizer}
+         onSelectEvent={handleSelectEvent}
+         onSelectSlot={handleSelectSlot}
+         selectable
+         eventPropGetter={eventStyleGetter}
+         scrollToTime={scrollToTime}
+        />
+    </div>
+    )
+   }
 }

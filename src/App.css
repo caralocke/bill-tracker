@@ -43,6 +43,15 @@
   width: 70%;
 }
 
+.rbc-calendar {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.rbc-toolbar-label {
+  font-size: 25px;
+}
+
 /* @media screen and (min-width: 321px) {
   .calendar-container {
     height: 250px;

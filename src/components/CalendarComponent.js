@@ -18,31 +18,30 @@ export default function CalendarComponent() {
   const [ myEvents, setEvents ] = useState(events);
   const [ weeklyEvents, setWeeklyEvents ] = useState([]);
   const [ totalDue, setTotalDue ] = useState([]);
-  console.log('myevents', myEvents)
-
   const addEvent = (event) => {
     setEvents((prevData) => [...prevData, event])
   }
 
   const addWeeklyEvent = (bill) => {
-    setWeeklyEvents((prevData) => [...prevData, bill])
+    setWeeklyEvents((prevData) => [...prevData, bill]);
   }
 
   const addTotalDue = (event) => {
-    setTotalDue(event)
+    setTotalDue(event);
   }
 
   useEffect(() => {
-    setBillData(bills)
+    setBillData(bills);
   }, [bills]);
 
  useEffect(() => {
   billData.forEach((bill) => {
+    let date = bill.dueDate;
     let newData = {
       id: bill.id,
       title: `${bill.billName}: $${bill.billAmount}`,
-      start: new Date(bill.dueDate),
-      end: new Date(bill.dueDate),
+      start: moment(date).toDate(),
+      end: moment(date).toDate(),
       hexColor: '00FFFF',
     }
     addEvent(newData);
@@ -54,7 +53,6 @@ export default function CalendarComponent() {
    billData.forEach((bill) => {
     let date = new Date(bill.dueDate);
     const start = firstDayWeek
-    console.log('billdata start', start)
     const end = lastDayWeek
     if (date >= start && date <= end){
       addWeeklyEvent(bill)
@@ -66,12 +64,15 @@ export default function CalendarComponent() {
   let total = 0;
   weeklyEvents.forEach((event)  => {
    total += Number(event.billAmount);
+   let date = new Date();
+   const start = new Date(date.setDate(date.getDate() - date.getDay()))
+   const end = new Date(date.setDate(date.getDate() - date.getDay() + 6))
    let totalOfEvents ={
     id: event.id,
-    title: `This week: $${total}`,
+    title: `Total for this week: $${total}`,
     allDay: true,
-    start: firstDayWeek,
-    end: firstDayWeek,
+    start: start,
+    end: end,
     hexColor: '50C878'
   }
    addTotalDue(totalOfEvents)

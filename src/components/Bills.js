@@ -24,7 +24,7 @@ export default function Bills() {
   return (
     <div className='bills-container'>
         <h3>Bills</h3>
-        {data.map(data => {
+        {data.length > 0 ? data.map(data => {
           return (
             <div className='bill-container' key={data.id}>
               <div>
@@ -34,8 +34,8 @@ export default function Bills() {
               </div>
               <button onClick={()=>handleClick(data.id)} className='delete-button'>Delete</button>
             </div>
-          )
-        })}
+          ) 
+        }): <div>Please add a bill</div>}
       </div>
   )
 }

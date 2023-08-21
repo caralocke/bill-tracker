@@ -5,23 +5,11 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 // import events from '../data'
 
-const weeklyEvents = [
-  {
-    id: 0,
-    title: 'All Day Event very long title',
-    allDay: true,
-    start: new Date('2023-08-27'),
-    end: new Date('2023-08-27'),
-  },
-  {
-    id: 1,
-    title: 'Long Event',
-    start: new Date('2023-09-01'),
-    end: new Date('2023-09-01'),
-  },
-]
-
 const localizer = momentLocalizer(moment);
+
+let today = new Date();
+let firstDayWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+let lastDayWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
 
 export default function CalendarComponent() {
   const bills = useSelector((state)=>state.bill.bills);
@@ -53,8 +41,8 @@ export default function CalendarComponent() {
     let newData = {
       id: bill.id,
       title: `${bill.billName}: $${bill.billAmount}`,
-      start: moment().format(bill.dueDate),
-      end: moment().format(bill.dueDate),
+      start: new Date(bill.dueDate),
+      end: new Date(bill.dueDate),
       hexColor: '00FFFF',
     }
     addEvent(newData);
@@ -64,9 +52,10 @@ export default function CalendarComponent() {
 
  useEffect(() => {
    billData.forEach((bill) => {
-    let date = moment(bill.dueDate);
-    const start = moment().startOf('week')
-    const end = moment().endOf('week')
+    let date = new Date(bill.dueDate);
+    const start = firstDayWeek
+    console.log('billdata start', start)
+    const end = lastDayWeek
     if (date >= start && date <= end){
       addWeeklyEvent(bill)
     } 
@@ -81,10 +70,10 @@ export default function CalendarComponent() {
     id: event.id,
     title: `This week: $${total}`,
     allDay: true,
-    start: moment().startOf('week'),
-    end: moment().startOf('week'),
+    start: firstDayWeek,
+    end: firstDayWeek,
     hexColor: '50C878'
-   }
+  }
    addTotalDue(totalOfEvents)
   })
  },[weeklyEvents])

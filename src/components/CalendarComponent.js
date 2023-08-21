@@ -30,10 +30,6 @@ export default function CalendarComponent() {
   const [ myEvents, setEvents ] = useState(events);
   const [ weeklyEvents, setWeeklyEvents ] = useState([]);
   const [ totalDue, setTotalDue ] = useState([]);
-  console.log('myEvents', myEvents);
-  // console.log('weekly events', weeklyEvents);
-  // console.log('billData', billData)
-  console.log('totalDue', totalDue);
 
   const addEvent = (event) => {
     setEvents((prevData) => [...prevData, event])
@@ -66,37 +62,26 @@ export default function CalendarComponent() {
 
  useEffect(() => {
    billData.forEach((bill) => {
-    let date = moment().format(bill.dueDate)
-    const start = moment().format('2023-08-27')
-    const end = moment().format('2023-09-02')
+    let date = moment(bill.dueDate);
+    const start = moment().startOf('week')
+    const end = moment().endOf('week')
     if (date >= start && date <= end){
       addWeeklyEvent(bill)
-    }
+    } 
    })
  }, [billData])
 
  useEffect(() => {
   let total = 0;
-  // let events = weeklyEvents;
-  // for (const event of events) {
-  //   total += Number(event.billAmount);
-  //   let totalOfEvents = {
-  //     id: event.id,
-  //     title: `Total: $${total}`,
-  //     start: new Date(2023, 7, 27),
-  //     end: new Date(2023, 7, 27)
-  //   }
-  //   addEvent(totalDue)
-  // }
   weeklyEvents.forEach((event)  => {
-   console.log('event', event)
    total += Number(event.billAmount);
-   console.log('total:', total)
    let totalOfEvents ={
     id: event.id,
-    title: `$${total}`,
-    start: new Date(2023, 7, 27),
-    end: new Date(2023, 7, 27)
+    title: `This week: $${total}`,
+    allDay: true,
+    start: moment().startOf('week'),
+    end: moment().startOf('week'),
+    hexColor: 'AAFF00'
    }
    addTotalDue(totalOfEvents)
   })
@@ -105,7 +90,22 @@ export default function CalendarComponent() {
 
  useEffect(() => {
   addEvent(totalDue)
- }, [totalDue])
+ }, [totalDue]);
+
+ const eventStyleGetter = (event, start, end, isSelected) => {
+  var backgroundColor = '#' + event.hexColor;
+  var style = {
+      backgroundColor: backgroundColor,
+      borderRadius: '0px',
+      opacity: 0.8,
+      color: 'black',
+      border: '0px',
+      display: 'block'
+  };
+  return {
+      style: style
+  };
+}
  
 
  
@@ -145,6 +145,7 @@ export default function CalendarComponent() {
            onSelectEvent={handleSelectEvent}
            onSelectSlot={handleSelectSlot}
            selectable
+           eventPropGetter={eventStyleGetter}
            scrollToTime={scrollToTime}
           />
       </div>

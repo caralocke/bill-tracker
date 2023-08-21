@@ -1,0 +1,13 @@
+.form-container {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.form {
+  border: 1px solid gray;
+}
+
+.billname-input {
+  border: .5px solid gray;
+}

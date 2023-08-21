@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addBill, getBills } from '../features/billSlice';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Billform.css'
 
 const Billform = () => {
     const dispatch = useDispatch();
@@ -38,18 +39,19 @@ const Billform = () => {
     <div>
       <div className='form-container'>
         <div>
-          <h3>Add a New Bill</h3>
           <form onSubmit={handleSubmit}>
-            <div>              
-                <input type='text' value={inputValue.billName} onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>
-            </div>
-            <div>
-                <input type='text' value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
-            </div>
-            <div>
-                <input type='date' value={inputValue.dueDate} onChange={handleChange} name="dueDate" id='dueDate'/>
-            </div>
-            <button>Submit</button>
+            <label>Add a New Bill             
+              <div>
+                <input type='text' className='billname-input' value={inputValue.billName} onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>
+              </div>
+              <div>
+                <input type='text' className='billamount-input' value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
+              </div>
+              <div>
+                <input type='date' className='date-input' value={inputValue.dueDate} onChange={handleChange} name="dueDate" id='dueDate'/>
+              </div>
+              <button>Submit</button>
+            </label> 
           </form>
           <div className='added-message'></div>
         </div>

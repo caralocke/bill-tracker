@@ -49,7 +49,6 @@ export default function CalendarComponent() {
       hexColor: '00FFFF',
     };
     addEvent(newData);
-    console.log('events', events)
   })
  },[billData]);
 
@@ -57,7 +56,6 @@ export default function CalendarComponent() {
  useEffect(() => {
    billData.forEach((bill) => {
     let date = moment(bill.dueDate).toDate();
-    console.log('bill name:', bill.billName, "due date:", date)
     const start = firstDayWeek;
     const end = lastDayWeek;
     if (date >= start && date <= end){
@@ -74,7 +72,6 @@ export default function CalendarComponent() {
    
    const start = moment(date.setDate(date.getDate() - date.getDay()));
    const end = moment(date.setDate(date.getDate() - date.getDay() + 6));
-   console.log('end', end)
    let totalOfEvents ={
     id: event.id,
     title: `Total for this week: $${total}`,

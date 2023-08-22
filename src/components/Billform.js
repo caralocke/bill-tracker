@@ -9,16 +9,16 @@ const Billform = () => {
     const bills = useSelector((state) => state.bill.bills);
     const initialFormValues = {billName: '', billAmount: '', dueDate: '' };
     const [inputValue, setInputValue] = useState(initialFormValues);
-    const [disabled, setDisabled] = useState(true)
     const [newData, setNewData] = useState(bills);
     const navigate = useNavigate();
 
     useEffect(() => {
-      setNewData(bills)
-    },[bills])
+      setNewData(bills);
+    },[bills]);
 
     const enableSubmit = () => {
-      let inputs = document.querySelector('input');
+      let inputs = document.querySelector('input')
+      // let nameInput = document.getElementById('.billName');
       let button = document.querySelector('button');
       let isValid = true;
       for (let i = 0; i < inputs.length; i++) {
@@ -33,16 +33,14 @@ const Billform = () => {
 
     const handleChange = (e) => {
       setInputValue({...inputValue, [e.target.name]: e.target.value});
-      console.log('input values', inputValue)
-      console.log('disabled', disabled)
     }
 
     
     
     const handleSubmit = async (e) => {
       e.preventDefault();
-      let result = await dispatch(addBill(inputValue))
-      setInputValue(initialFormValues)
+      let result = await dispatch(addBill(inputValue));
+      setInputValue(initialFormValues);
       dispatch(getBills())
       .unwrap()
       .then((res) => {

@@ -3,7 +3,6 @@ import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import events from '../data'
 
 const localizer = momentLocalizer(moment);
 
@@ -18,17 +17,19 @@ export default function CalendarComponent() {
   const [ myEvents, setEvents ] = useState(events);
   const [ weeklyEvents, setWeeklyEvents ] = useState([]);
   const [ totalDue, setTotalDue ] = useState([]);
+  
+
   const addEvent = (event) => {
-    setEvents((prevData) => [...prevData, event])
-  }
+    setEvents((prevData) => [...prevData, event]);
+  };
 
   const addWeeklyEvent = (bill) => {
     setWeeklyEvents((prevData) => [...prevData, bill]);
-  }
+  };
 
   const addTotalDue = (event) => {
     setTotalDue(event);
-  }
+  };
 
   useEffect(() => {
     setBillData(bills);
@@ -37,13 +38,16 @@ export default function CalendarComponent() {
  useEffect(() => {
   billData.forEach((bill) => {
     let date = bill.dueDate;
+    const hours = 12;
+    const minutes1 = 0;
+    const minutes2 = 30;
     let newData = {
       id: bill.id,
       title: `${bill.billName}: $${bill.billAmount}`,
-      start: moment(date).toDate(),
-      end: moment(date).toDate(),
+      start: moment(date).set('hour', hours).set('minute', minutes1).toDate(),
+      end: moment(date).set('hour', hours).set('minute', minutes2).toDate(),
       hexColor: '00FFFF',
-    }
+    };
     addEvent(newData);
   })
  },[billData]);
@@ -51,9 +55,9 @@ export default function CalendarComponent() {
 
  useEffect(() => {
    billData.forEach((bill) => {
-    let date = new Date(bill.dueDate);
-    const start = firstDayWeek
-    const end = lastDayWeek
+    let date = moment(bill.dueDate).toDate();
+    const start = firstDayWeek;
+    const end = lastDayWeek;
     if (date >= start && date <= end){
       addWeeklyEvent(bill)
     } 
@@ -65,8 +69,9 @@ export default function CalendarComponent() {
   weeklyEvents.forEach((event)  => {
    total += Number(event.billAmount);
    let date = new Date();
-   const start = new Date(date.setDate(date.getDate() - date.getDay()))
-   const end = new Date(date.setDate(date.getDate() - date.getDay() + 6))
+   
+   const start = moment(date.setDate(date.getDate() - date.getDay()));
+   const end = moment(date.setDate(date.getDate() - date.getDay() + 6));
    let totalOfEvents ={
     id: event.id,
     title: `Total for this week: $${total}`,
@@ -75,13 +80,13 @@ export default function CalendarComponent() {
     end: end,
     hexColor: '50C878'
   }
-   addTotalDue(totalOfEvents)
+   addTotalDue(totalOfEvents);
   })
- },[weeklyEvents])
+ },[weeklyEvents]);
  
 
  useEffect(() => {
-  addEvent(totalDue)
+  addEvent(totalDue);
  }, [totalDue]);
 
  const eventStyleGetter = (event, start, end, isSelected) => {
@@ -97,7 +102,7 @@ export default function CalendarComponent() {
   return {
       style: style
   };
-}
+};
  
 
  
@@ -106,13 +111,13 @@ export default function CalendarComponent() {
 
   const handleSelectSlot = useCallback(
     ({ start, end }) => {
-      const title = window.prompt('New Event name')
+      const title = window.prompt('New Event name');
       if (title) {
         setEvents((prev) => [...prev, { start, end, title }]);
       }
     },
     [setEvents]
-  )
+  );
 
   const handleSelectEvent = useCallback(
     (event) => window.alert(event.title),
@@ -125,13 +130,13 @@ export default function CalendarComponent() {
       scrollToTime: new Date(1970, 1, 1, 6),
     }),
     []
-  )
+  );
 
   
    if (myEvents.length === 0) {
     return (
       <div>Please add a bill</div>
-    )
+    );
    } else {
     return (
       <div className='calendar-container'>
@@ -147,6 +152,6 @@ export default function CalendarComponent() {
          scrollToTime={scrollToTime}
         />
     </div>
-    )
-   }
-}
+    );
+   };
+};

@@ -8,8 +8,6 @@ export default function Bills() {
   const dispatch = useDispatch();
   const bills = useSelector((state) => state.bill.bills);
   const [data, setData] = useState(bills);
-  console.log('bills.js bills', bills)
-  console.log('bills.js data', data)
 
   useEffect(() => {
     setData(bills)

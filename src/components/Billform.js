@@ -10,26 +10,28 @@ const Billform = () => {
     const initialFormValues = {billName: '', billAmount: '', dueDate: '' };
     const [inputValue, setInputValue] = useState(initialFormValues);
     const [newData, setNewData] = useState(bills);
+    const [isDisabled, setDisabled] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
       setNewData(bills);
     },[bills]);
 
+   
+
     const enableSubmit = () => {
-      let inputs = document.querySelector('input')
-      // let nameInput = document.getElementById('.billName');
-      let button = document.querySelector('button');
-      let isValid = true;
-      for (let i = 0; i < inputs.length; i++) {
-        let changedInput = inputs[i];
-        if (changedInput.value.trim() === '' || changedInput.value === null){
-          isValid = false;
-          break;
-        }
+      if (inputValue.billName === '' || inputValue.billName === null) {
+        setDisabled(true)
+      } else if (inputValue.billAmount === '' || inputValue.billAmount === null) {
+        setDisabled(true)
+      } else if (inputValue.dueDate === '' || inputValue.dueDate === null) {
+        setDisabled(true)
+      } else {
+        setDisabled(false)
       }
-      button.disabled = !isValid;
     }
+
+  
 
     const handleChange = (e) => {
       setInputValue({...inputValue, [e.target.name]: e.target.value});
@@ -57,15 +59,15 @@ const Billform = () => {
           <form onSubmit={handleSubmit}>
             <label>Add a New Bill             
               <div className='billname-box'>
-                <input type='text' className='billname-input' onKeyUp={enableSubmit} value={inputValue.billName} onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>
-              </div>
-              <div className='billamount-box'>
-                <input type='text' className='billamount-input' onKeyUp={enableSubmit} value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
+                <input type='text' className='billname-input required' onKeyUp={enableSubmit} value={inputValue.billName} onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>
               </div>
               <div className='duedate-box'>
-                <input type='date' className='date-input' onKeyUp={enableSubmit} value={inputValue.dueDate} onChange={handleChange} name="dueDate" id='dueDate'/>
+                <input type='date' className='date-input required' onKeyUp={enableSubmit} value={inputValue.dueDate} selected={inputValue.dueDate} onChange={handleChange} name="dueDate" id='dueDate'/>
               </div>
-              <button className='submit-button' disabled>Submit</button>
+              <div className='billamount-box'>
+                <input type='text' className='billamount-input required' onKeyUp={enableSubmit} value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
+              </div>
+              <button className='submit-button' disabled={isDisabled}>Submit</button>
             </label> 
           </form>
           <div className='added-message'></div>

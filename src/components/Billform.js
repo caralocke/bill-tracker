@@ -17,17 +17,32 @@ const Billform = () => {
       setNewData(bills);
     },[bills]);
 
+
+   let button = document.querySelector('.submit-button')
+
+   const disable = () => {
+    setDisabled(true)
+    button.classList.remove('enabled')
+    button.classList.add('disabled')
+   }
+
+   const enable = () => {
+    setDisabled(false)
+    button.classList.remove('disabled')
+    button.classList.add('enabled')
+   }
+
    
 
     const enableSubmit = () => {
       if (inputValue.billName === '' || inputValue.billName === null) {
-        setDisabled(true)
+        disable()
       } else if (inputValue.billAmount === '' || inputValue.billAmount === null) {
-        setDisabled(true)
+        disable()
       } else if (inputValue.dueDate === '' || inputValue.dueDate === null) {
-        setDisabled(true)
+        disable()
       } else {
-        setDisabled(false)
+        enable()
       }
     }
 
@@ -74,7 +89,7 @@ const Billform = () => {
                   <input type='text' className='billamount-input required' onKeyUp={enableSubmit} value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
               </div>
 
-              <button className='submit-button' disabled={isDisabled}>Submit</button>
+              <button className='submit-button disabled' disabled={isDisabled}>Submit</button>
               </div>
             </label> 
           </form>

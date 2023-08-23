@@ -1,0 +1,21 @@
+body.dark {
+  background-color: #151718;
+  color: white;
+}
+
+body.dark .navbar {
+  background-color: rgb(32, 35, 36);
+}
+
+body.dark .rbc-off-range-bg {
+  background-color: rgb(45, 45, 46);
+}
+
+body.dark .rbc-today {
+  background-color: rgb(45, 45, 46);
+}
+
+body.dark .rbc-active {
+  background-color: rgb(45, 45, 46);
+  color: white;
+}

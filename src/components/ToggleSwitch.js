@@ -4,12 +4,15 @@ import '../styles/LightMode.css';
 
 export default function ToggleSwitch({ label }) {
   let themeData = localStorage.getItem('theme')
-  let checkedData = JSON.parse(localStorage.getItem('checked'))
+  let checkedData = () => {
+    if (localStorage.length === 0) {
+      return false
+    } else {
+      return JSON.parse(localStorage.getItem('checked'))
+    }
+  }
   const [ theme, setTheme ] = useState(themeData);
-  const [checked, setChecked] = useState(checkedData)
-  console.log('theme', theme)
-  console.log('checkedData', checkedData)
-  console.log('checked', checked)
+  const [checked, setChecked] = useState(checkedData);
 
   const  toggleTheme = () => {
   if (theme === 'light') {
@@ -23,8 +26,6 @@ export default function ToggleSwitch({ label }) {
     setChecked(false)
     setCheckedInStorage(checked)
     }
-  console.log('label', label)
-  console.log('localStorage', localStorage)
   };
 
   const setThemeInStorage = (theme) => {
@@ -33,13 +34,18 @@ export default function ToggleSwitch({ label }) {
 
   const setCheckedInStorage = (checked) => {
     localStorage.setItem('checked', checked)
-  }
+  };
 
   useEffect(() => {
+    if (localStorage.length === 0) {
+      setTheme('light')
+      setChecked(false)
+    } else {
     let theme = localStorage.getItem('theme')
     let checked = JSON.parse(localStorage.getItem('checked'))
     setTheme(theme)
     setChecked(checked)
+    }    
   },[]);
 
   useEffect(() => {

@@ -57,17 +57,25 @@ const Billform = () => {
       <div className='form-container'>
         <div>
           <form onSubmit={handleSubmit}>
-            <label>Add a New Bill             
+            <label>Add a New Bill    
+              <div className='bill-info-box'>
               <div className='billname-box'>
-                <input type='text' className='billname-input required' onKeyUp={enableSubmit} value={inputValue.billName} onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>
+                <label className='input-label'> Bill Name: </label>
+                  <input type='text' className='billname-input required' onKeyUp={enableSubmit} value={inputValue.billName} onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>                
               </div>
+
               <div className='duedate-box'>
-                <input type='date' className='date-input required' onKeyUp={enableSubmit} value={inputValue.dueDate} selected={inputValue.dueDate} onChange={handleChange} name="dueDate" id='dueDate'/>
+                <label className='input-label'> Due date: </label>
+                  <input type='date' className='date-input required' onKeyUp={enableSubmit} value={inputValue.dueDate} selected={inputValue.dueDate} onChange={handleChange} name="dueDate" id='dueDate'/>
               </div>
+
               <div className='billamount-box'>
-                <input type='text' className='billamount-input required' onKeyUp={enableSubmit} value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
+                <label className='input-label'> Amount: </label>
+                  <input type='text' className='billamount-input required' onKeyUp={enableSubmit} value={inputValue.billAmount} onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
               </div>
+
               <button className='submit-button' disabled={isDisabled}>Submit</button>
+              </div>
             </label> 
           </form>
           <div className='added-message'></div>

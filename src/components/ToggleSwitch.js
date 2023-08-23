@@ -8,10 +8,21 @@ export default function ToggleSwitch({ label }) {
   const  toggleTheme = () => {
   if (theme === 'light') {
     setTheme('dark')
+    setThemeInStorage('dark')
     } else {
     setTheme('light')
+    setThemeInStorage('light')
     }
   };
+
+  const setThemeInStorage = (theme) => {
+    localStorage.setItem('theme', theme)
+  }
+
+  useEffect(() => {
+    let theme = localStorage.getItem('theme')
+    setTheme(theme)
+  },[])
 
   useEffect(() => {
     document.body.className = theme;

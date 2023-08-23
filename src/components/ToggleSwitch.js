@@ -6,12 +6,12 @@ export default function ToggleSwitch({ label }) {
 
   const [ theme, setTheme ] = useState('light');
   const  toggleTheme = () => {
-  if (theme === 'light') {
-    setTheme('dark')
-    setThemeInStorage('dark')
-    } else {
+  if (theme === 'dark') {
     setTheme('light')
     setThemeInStorage('light')
+    } else {
+    setTheme('dark')
+    setThemeInStorage('dark')
     }
   };
 

@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ToggleSwitch from './ToggleSwitch';
 import billing from '../styles/icons/billing.png';
 import home from '../styles/icons/Home.png';
 
 export default function Navbar() {
-
   return (
     <div className='navbar'>
       <div>

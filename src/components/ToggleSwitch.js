@@ -4,16 +4,24 @@ import '../styles/LightMode.css';
 
 export default function ToggleSwitch({ label }) {
   let themeData = localStorage.getItem('theme')
+  let checkedData = JSON.parse(localStorage.getItem('checked'))
   const [ theme, setTheme ] = useState(themeData);
+  const [checked, setChecked] = useState(checkedData)
   console.log('theme', theme)
+  console.log('checkedData', checkedData)
+  console.log('checked', checked)
 
   const  toggleTheme = () => {
   if (theme === 'light') {
     setTheme('dark')
     setThemeInStorage('dark')
+    setChecked(true)
+    setCheckedInStorage(checked)
     } else {
     setTheme('light')
     setThemeInStorage('light')
+    setChecked(false)
+    setCheckedInStorage(checked)
     }
   console.log('label', label)
   console.log('localStorage', localStorage)
@@ -23,14 +31,21 @@ export default function ToggleSwitch({ label }) {
     localStorage.setItem('theme', theme)
   };
 
+  const setCheckedInStorage = (checked) => {
+    localStorage.setItem('checked', checked)
+  }
+
   useEffect(() => {
     let theme = localStorage.getItem('theme')
+    let checked = JSON.parse(localStorage.getItem('checked'))
     setTheme(theme)
+    setChecked(checked)
   },[]);
 
   useEffect(() => {
     localStorage.setItem('theme', theme)
-  }, [theme]);
+    localStorage.setItem('checked', checked)
+  }, [theme, checked]);
 
 
   useEffect(() => {
@@ -42,7 +57,7 @@ export default function ToggleSwitch({ label }) {
     <div className='toggle-container'>
       {label} {''}
       <div className='toggle-switch'>
-        <input type='checkbox' className='checkbox' name={label} id={label} onClick={toggleTheme} />
+        <input type='checkbox' className='checkbox' checked={checked} onChange={toggleTheme} name={label} id={label} onClick={toggleTheme} />
         <label className='label' htmlFor={label}>
           <span className='inner'/>
           <span className='switch'/>

@@ -198,13 +198,13 @@
   box-sizing: border-box;
 }
 .inner:before {
-  content: "YES";
+  content: "ON";
   padding-left: 10px;
   background-color: #060;
   color: #fff;
 }
 .inner:after {
-  content: "NO";
+  content: "OFF";
   padding-right: 10px;
   background-color: #bbb;
   color: #fff;

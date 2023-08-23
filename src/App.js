@@ -23,8 +23,6 @@ const  App = () => {
     setEventsData(events)
   }, []);
 
-  console.log('App.js bills', bills)
-
 
 
   return (

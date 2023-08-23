@@ -4,7 +4,7 @@ import '../styles/LightMode.css';
 
 export default function ToggleSwitch({ label }) {
 
-  const [ theme, setTheme ] = useState('light');
+  const [ theme, setTheme ] = useState(localStorage.getItem('theme'));
   const  toggleTheme = () => {
   if (theme === 'dark') {
     setTheme('light')
@@ -17,12 +17,12 @@ export default function ToggleSwitch({ label }) {
 
   const setThemeInStorage = (theme) => {
     localStorage.setItem('theme', theme)
-  }
+  };
 
   useEffect(() => {
     let theme = localStorage.getItem('theme')
     setTheme(theme)
-  },[])
+  },[theme]);
 
   useEffect(() => {
     document.body.className = theme;

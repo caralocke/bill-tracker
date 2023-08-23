@@ -115,6 +115,24 @@
   background-color: red;
   border-radius: 5px;
 }
+.billname-input, .billamount-input, .date-input {
+  background-color: white;
+}
+
+.form-container {
+  display: inline-block;
+}
+.input-label {
+  display: block;
+  padding-top: 5px;
+}
+
+.bill-info-box {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+}
 
 .bill-entry-container {
   justify-content: center;

@@ -23,13 +23,15 @@ const  App = () => {
     setEventsData(events)
   }, []);
 
+  console.log('App.js bills', bills)
+
 
 
   return (
     <div className="App">
       <Navbar/>
       <Routes>
-        <Route exact path="/" element={<><Billform/><CalendarComponent/></>}/>          
+        <Route exact path="/" element={<><Billform/> {bills.length === 0 ? (<div>Start by adding a bill</div>) : (<CalendarComponent/>)}</>}/>          
         <Route exact path='/bills' element={<Bills/>}/>        
       </Routes> 
     </div>

@@ -1,6 +1,3 @@
-/* body.light {
-  background-color: rgb(255, 255, 254);
-} */
 .App {
   text-align: center;
 }
@@ -55,47 +52,6 @@
   font-size: 25px;
 }
 
-/* @media screen and (min-width: 321px) {
-  .calendar-container {
-    height: 250px;
-    width: 250;
-  }
-  .rbc-btn-group{
-    width: 65px;
-  }
-  .rbc-toolbar-label {
-    width: 70px;
-  }
-
-}
-
-@media screen and (min-width: 576px){
-  .calendar-container {
-    height: 250px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .calendar-container {
-    height: 450px;
-    width: 600px;
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .calendar-container {
-    height: 500px;
-    width: 750px;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .calendar-container {
-    height: 500px;
-    width: 750px;
-  }
-} */
-
 
 .bills-container {
   justify-content: center;
@@ -122,9 +78,18 @@
 .form-container {
   display: inline-block;
 }
+
 .input-label {
   display: block;
   padding-top: 5px;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.enabled {
+  cursor: pointer;
 }
 
 .bill-info-box {

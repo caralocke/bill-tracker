@@ -35,3 +35,13 @@ body.dark .date-input {
 body.dark .delete-button {
   border: 1px solid white;
 }
+
+body.dark .event-modal-inner {
+  background-color: rgb(94, 94, 95);
+  border: 1px solid black;
+}
+
+body.dark .event-modal-inner .modal-close-button {
+  background-color: rgb(41, 40, 40);
+  color: white;
+}

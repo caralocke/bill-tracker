@@ -1,8 +1,10 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addBill } from '../features/billSlice';
 import moment from 'moment';
 import EventModal from './EventModal';
+import CreateEventModal from './CreateEventModal';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
@@ -19,7 +21,16 @@ export default function CalendarComponent() {
   const [ weeklyEvents, setWeeklyEvents ] = useState([]);
   const [ totalDue, setTotalDue ] = useState([]);
   const [ modalState, setModalState ] = useState(false);
+  const [ createEventModalState, setCreateEventModalState ] = useState(false);
   const [selectedEvent, setSelectedEvent ] = useState(undefined);
+  const [ childData, setChildData ] = useState('');
+  const [ createModalDay, setCreateModalDay ] = useState('')
+  // console.log('childData', childData)
+  // console.log('myEvents', myEvents)
+  // console.log('weekly events', weeklyEvents)
+  // console.log('billData', billData)
+
+  const dispatch = useDispatch();
   
 
   const addEvent = (event) => {
@@ -58,6 +69,7 @@ export default function CalendarComponent() {
 
  useEffect(() => {
    billData.forEach((bill) => {
+    console.log('bill billDataUE', bill)        //////////////////////////////////////////////////////////////
     let date = moment(bill.dueDate).toDate();
     const start = firstDayWeek;
     const end = lastDayWeek;
@@ -67,9 +79,21 @@ export default function CalendarComponent() {
    })
  }, [billData])
 
+useEffect(() => {
+  myEvents.forEach((event) => {
+    console.log('event myEvents UE', event)       ////////////////////////////////////////////////////////////
+    let start = firstDayWeek;
+    let end = lastDayWeek;
+    if ((event.start && event.end >= start) && (event.start && event.end <= end)) {
+      addWeeklyEvent(event)
+    }
+  })
+}, [billData])
+
  useEffect(() => {
   let total = 0;
   weeklyEvents.forEach((event)  => {
+    console.log('event weeklyEvents UE', event)     //////////////////////////////////////////////////////////
    total += Number(event.billAmount);
    let date = new Date();
    
@@ -107,28 +131,22 @@ export default function CalendarComponent() {
   };
 };
 
-useEffect(() => {
-  const dialog = document.getElementById('modal')
-  console.log('dialog', dialog)
-  const closeDialogButton = document.getElementById('closeModal')
-  console.log('closedialogb', closeDialogButton)
-},[])
-
 const handleSelectEvent = (event) => {
   setSelectedEvent(event)
-  EventModal(event)
   setModalState(true)
 }
 
-  const handleSelectSlot = useCallback(
-    ({ event, start, end }) => {
-      const title = window.prompt('New Event name');
-      if (title) {
-        setEvents((prev) => [...prev, { start, end, title }]);
-      }
-    },
-    [setEvents]
-  );
+
+const childToParent = (childData) => {
+  // setChildData(childData)
+  // console.log('childData', childData)
+}
+
+const handleSelectSlot = (day) => {
+  // console.log('day', day)
+    setCreateEventModalState(true)
+    setCreateModalDay(day)
+  }
 
   const { defaultDate, scrollToTime } = useMemo(
     () => ({
@@ -157,7 +175,9 @@ const handleSelectEvent = (event) => {
          eventPropGetter={eventStyleGetter}
          scrollToTime={scrollToTime}
          />
-         {selectedEvent && <EventModal trigger={modalState} event={selectedEvent} setTrigger ={setModalState}/>}
+         <EventModal trigger={modalState} billData={billData} setBillData={setBillData} myEvents={myEvents} event={selectedEvent} setTrigger ={setModalState}/>
+      {/* {selectedEvent && <EventModal trigger={modalState} event={selectedEvent} setTrigger ={setModalState}/>} */}
+       <CreateEventModal trigger={createEventModalState} billData={billData} setBillData={setBillData} day={createModalDay} myEvents={myEvents} setEvents={setEvents} childToParent={childToParent} setTrigger={setCreateEventModalState}/>
     </div>
     );
    };

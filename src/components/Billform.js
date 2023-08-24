@@ -48,23 +48,21 @@ const Billform = () => {
 
   
 
-    const handleChange = (e) => {
+  const handleChange = (e) => {
       setInputValue({...inputValue, [e.target.name]: e.target.value});
     }
-
     
-    
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      let result = await dispatch(addBill(inputValue));
-      setInputValue(initialFormValues);
-      dispatch(getBills())
-      .unwrap()
-      .then((res) => {
-        setNewData(res.data);
-      })
-      navigate('/bills');
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let result = await dispatch(addBill(inputValue));
+    setInputValue(initialFormValues);
+    dispatch(getBills())
+    .unwrap()
+    .then((res) => {
+      setNewData(res.data);
+    })
+    navigate('/bills');
+  }
   
 
   return (

@@ -45,3 +45,8 @@ body.dark .event-modal-inner .modal-close-button {
   background-color: rgb(41, 40, 40);
   color: white;
 }
+
+body.dark .create-event-modal-inner {
+  background-color: rgb(41, 40, 40);
+  color: white;
+}

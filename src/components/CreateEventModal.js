@@ -51,7 +51,7 @@ export default function CreateEventModal(props) {
         setNewData(res)
       })
       props.setTrigger(false)
-      // navigate('/bills')
+      navigate('/bills')
     }
 
 

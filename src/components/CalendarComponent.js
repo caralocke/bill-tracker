@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import EventModal from './EventModal';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
@@ -17,6 +18,8 @@ export default function CalendarComponent() {
   const [ myEvents, setEvents ] = useState(events);
   const [ weeklyEvents, setWeeklyEvents ] = useState([]);
   const [ totalDue, setTotalDue ] = useState([]);
+  const [ modalState, setModalState ] = useState(false);
+  const [selectedEvent, setSelectedEvent ] = useState(undefined);
   
 
   const addEvent = (event) => {
@@ -103,14 +106,22 @@ export default function CalendarComponent() {
       style: style
   };
 };
- 
 
- 
+useEffect(() => {
+  const dialog = document.getElementById('modal')
+  console.log('dialog', dialog)
+  const closeDialogButton = document.getElementById('closeModal')
+  console.log('closedialogb', closeDialogButton)
+},[])
 
-
+const handleSelectEvent = (event) => {
+  setSelectedEvent(event)
+  EventModal(event)
+  setModalState(true)
+}
 
   const handleSelectSlot = useCallback(
-    ({ start, end }) => {
+    ({ event, start, end }) => {
       const title = window.prompt('New Event name');
       if (title) {
         setEvents((prev) => [...prev, { start, end, title }]);
@@ -118,11 +129,6 @@ export default function CalendarComponent() {
     },
     [setEvents]
   );
-
-  const handleSelectEvent = useCallback(
-    (event) => window.alert(event.title),
-    []
-  )
 
   const { defaultDate, scrollToTime } = useMemo(
     () => ({
@@ -139,7 +145,7 @@ export default function CalendarComponent() {
     );
    } else {
     return (
-      <div className='calendar-container'>
+      <div className='calendar-container' >
       <Calendar 
          defaultDate={defaultDate}
          defaultView={Views.MONTH}
@@ -150,7 +156,8 @@ export default function CalendarComponent() {
          selectable
          eventPropGetter={eventStyleGetter}
          scrollToTime={scrollToTime}
-        />
+         />
+         {selectedEvent && <EventModal trigger={modalState} event={selectedEvent} setTrigger ={setModalState}/>}
     </div>
     );
    };

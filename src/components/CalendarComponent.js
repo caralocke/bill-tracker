@@ -26,8 +26,8 @@ export default function CalendarComponent() {
   const [ childData, setChildData ] = useState('');
   const [ createModalDay, setCreateModalDay ] = useState('')
   // console.log('childData', childData)
-  // console.log('myEvents', myEvents)
-  // console.log('weekly events', weeklyEvents)
+  console.log('myEvents', myEvents)
+  console.log('weekly events', weeklyEvents)
   // console.log('billData', billData)
 
   const dispatch = useDispatch();
@@ -45,10 +45,12 @@ export default function CalendarComponent() {
     setTotalDue(event);
   };
 
+  //1)setting billData state to bills
   useEffect(() => {
     setBillData(bills);
   }, [bills]);
 
+  //2)looping over billData and creating a new "event" for each bill
  useEffect(() => {
   billData.forEach((bill) => {
     let date = bill.dueDate;
@@ -58,6 +60,7 @@ export default function CalendarComponent() {
     let newData = {
       id: bill.id,
       title: `${bill.billName}: $${bill.billAmount}`,
+      billAmount: bill.billAmount,
       start: moment(date).set('hour', hours).set('minute', minutes1).toDate(),
       end: moment(date).set('hour', hours).set('minute', minutes2).toDate(),
       hexColor: '00FFFF',
@@ -66,7 +69,7 @@ export default function CalendarComponent() {
   })
  },[billData]);
 
-
+//3)looping over billData to see if "dueDate" falls within a range, if it does, adding to weeklyEvents
  useEffect(() => {
    billData.forEach((bill) => {
     console.log('bill billDataUE', bill)        //////////////////////////////////////////////////////////////
@@ -79,17 +82,20 @@ export default function CalendarComponent() {
    })
  }, [billData])
 
-useEffect(() => {
-  myEvents.forEach((event) => {
-    console.log('event myEvents UE', event)       ////////////////////////////////////////////////////////////
-    let start = firstDayWeek;
-    let end = lastDayWeek;
-    if ((event.start && event.end >= start) && (event.start && event.end <= end)) {
-      addWeeklyEvent(event)
-    }
-  })
-}, [billData])
+//looping over myEvents
+// useEffect(() => {
+//   myEvents.forEach((event) => {
+//     console.log('event myEvents UE', event)       ////////////////////////////////////////////////////////////
+//     let date = moment(event.dueDate).toDate();
+//     let start = firstDayWeek;
+//     let end = lastDayWeek;
+//     if (date >= start && date <= end) {
+//       addWeeklyEvent(event)
+//     }
+//   })
+// }, [billData])
 
+//4)looping over weekly events and adding the total amount of money due that week for bills, then creating a new event with a different colored flag to represent the total due that week
  useEffect(() => {
   let total = 0;
   weeklyEvents.forEach((event)  => {
@@ -111,7 +117,7 @@ useEffect(() => {
   })
  },[weeklyEvents]);
  
-
+//5)adding totalDue to events every time totalDue updates
  useEffect(() => {
   addEvent(totalDue);
  }, [totalDue]);

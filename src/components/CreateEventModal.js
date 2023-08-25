@@ -6,23 +6,13 @@ import '../styles/CreateEventModal.css'
 import moment from 'moment';
 
 export default function CreateEventModal(props) {
-    // console.log('create event props', props)
+    console.log('create event props', props)
     const bills = useSelector((state) => state.bill.bills)
     const initialFormValues = {billName: '', billAmount:''}
     const [inputValue, setInputValue] = useState(initialFormValues);
     const [ newData, setNewData ] = useState(bills);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-
-    const data = inputValue
-
-    // let newEvent = {
-    //   title: `${inputValue.billName}: $${inputValue.billAmount}`,
-    //   start: props.day.start,
-    //   end: props.day.end,
-    //   hexColor: '00FFFF'
-    // }  
+    const navigate = useNavigate()
 
     let newBill = {
       id: Math.random(),
@@ -31,7 +21,9 @@ export default function CreateEventModal(props) {
       dueDate: moment(props.day.start).format('YYYY/MM/DD')
     }
 
-    console.log('newBill', newBill)
+    console.log('createEventModal inputValue', inputValue)
+
+    console.log('createEventModal newBill', newBill)
 
     const handleChange = (e) => {
       setInputValue({...inputValue, [e.target.name]: e.target.value});
@@ -39,17 +31,9 @@ export default function CreateEventModal(props) {
 
     const onSubmit = async (e) => {
       e.preventDefault()
-      // props.childToParent(data)
-      // props.setEvents((prev) => [...prev, newEvent])
-      // props.setBillData((prev) => [...prev, newBill])
       console.log('billData onsubmit', props.billData)
       let result = await dispatch(addBill(newBill));
       dispatch(getBills())
-      .unwrap()
-      .then((res) => {
-        console.log('res', res)
-        setNewData(res)
-      })
       props.setTrigger(false)
       navigate('/bills')
     }

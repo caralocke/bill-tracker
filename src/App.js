@@ -11,18 +11,12 @@ import { getBills } from './features/billSlice';
 const  App = () => {
 
   const bills = useSelector((state) => state.bill.bills);
-  const [billData, setBillData] = useState(bills);
+  console.log('App bills', bills)
   const dispatch = useDispatch()
-  useEffect(() => {
-    setBillData(dispatch(getBills()));
-  }, []);
 
-  const events = useSelector((state) => state.event.events);
-  const [eventsData, setEventsData] = useState([]);
   useEffect(() => {
-    setEventsData(events)
-  }, []);
-
+    dispatch(getBills())
+  },[])
 
 
   return (

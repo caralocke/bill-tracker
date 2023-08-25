@@ -13,9 +13,9 @@ export default function EventModal(props) {
     let result = await dispatch(deleteBill(id));
     dispatch(getBills())
     props.setTrigger(false)
-    props.myEvents.filter((event) => {
-      return event !== event.id
-    })
+    // props.myEvents.filter((event) => {
+    //   return event !== event.id
+    // })
     // console.log('myEvents after delete', props.myEvents)
   }
     return (props.trigger) ? (

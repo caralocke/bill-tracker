@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { addBill, getBills } from '../features/billSlice';
-import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import '../styles/Billform.css'
+import { addEvent } from '../features/eventSlice';
 
 const Billform = () => {
     const dispatch = useDispatch();
-    const bills = useSelector((state) => state.bill.bills);
     const initialFormValues = {billName: '', billAmount: '', dueDate: '' };
     const [inputValue, setInputValue] = useState(initialFormValues);
-    const [newData, setNewData] = useState(bills);
     const [isDisabled, setDisabled] = useState(true);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-      setNewData(bills);
-    },[bills]);
 
 
    let button = document.querySelector('.submit-button')
@@ -51,17 +45,25 @@ const Billform = () => {
   const handleChange = (e) => {
       setInputValue({...inputValue, [e.target.name]: e.target.value});
     }
+
+    console.log('billform inputValue', inputValue)
     
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let result = await dispatch(addBill(inputValue));
+    let bill = inputValue
+    console.log('billform submit bill', bill)
+    let result = await dispatch(addBill(bill));
     setInputValue(initialFormValues);
     dispatch(getBills())
-    .unwrap()
-    .then((res) => {
-      setNewData(res.data);
-    })
-    navigate('/bills');
+    // let date = bill.dueDate
+    // let newEvent = {
+    //   id: bill.id,
+    //   title: `${bill.billName}: $${bill.billAmount}`,
+    //   start: moment(date).toDate(),
+    //   end: moment(date).toDate(),
+    //   hexColor: '00FFFF',
+    // }
+    // dispatch(addEvent(newEvent))
   }
   
 

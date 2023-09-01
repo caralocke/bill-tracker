@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback, useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
-import { useSelector, useDispatch } from 'react-redux';
-import { addBill } from '../features/billSlice';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import EventModal from './EventModal';
 import CreateEventModal from './CreateEventModal';
@@ -10,120 +9,40 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 const localizer = momentLocalizer(moment);
 
 let today = new Date();
-let firstDayWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-let lastDayWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+let firstDay = new Date(today.setDate(today.getDate() - today.getDay()));
+let lastDay = new Date(today.setDate(today.getDate() - today.getDay() + 6));
 
 export default function CalendarComponent() {
   const bills = useSelector((state)=>state.bill.bills);
-  const events = useSelector((state) => state.event.events)
-  const [ billData, setBillData ] = useState(bills);
-  const [ myEvents, setEvents ] = useState(events);
-  const [ weeklyEvents, setWeeklyEvents ] = useState([]);
-  const [ totalDue, setTotalDue ] = useState([]);
+  const [ myEvents, setMyEvents ] = useState([]);
   const [ modalState, setModalState ] = useState(false);
   const [ createEventModalState, setCreateEventModalState ] = useState(false);
-  const [selectedEvent, setSelectedEvent ] = useState(undefined);
-  const [ childData, setChildData ] = useState('');
-  const [ createModalDay, setCreateModalDay ] = useState('')
-  // console.log('childData', childData)
-  console.log('myEvents', myEvents)
-  console.log('weekly events', weeklyEvents)
-  // console.log('billData', billData)
+  const [ selectedEvent, setSelectedEvent ] = useState(undefined);
+  const [ createModalDay, setCreateModalDay ] = useState('');
 
-  const dispatch = useDispatch();
-  
 
-  const addEvent = (event) => {
-    setEvents((prevData) => [...prevData, event]);
-  };
-
-  const addWeeklyEvent = (bill) => {
-    setWeeklyEvents((prevData) => [...prevData, bill]);
-  };
-
-  const addTotalDue = (event) => {
-    setTotalDue(event);
-  };
-
-  //1)setting billData state to bills
   useEffect(() => {
-    setBillData(bills);
-  }, [bills]);
-
-  //2)looping over billData and creating a new "event" for each bill
- useEffect(() => {
-  billData.forEach((bill) => {
-    let date = bill.dueDate;
-    const hours = 12;
-    const minutes1 = 0;
-    const minutes2 = 30;
-    let newData = {
-      id: bill.id,
-      title: `${bill.billName}: $${bill.billAmount}`,
-      billAmount: bill.billAmount,
-      start: moment(date).set('hour', hours).set('minute', minutes1).toDate(),
-      end: moment(date).set('hour', hours).set('minute', minutes2).toDate(),
-      hexColor: '00FFFF',
-    };
-    addEvent(newData);
-  })
- },[billData]);
-
-//3)looping over billData to see if "dueDate" falls within a range, if it does, adding to weeklyEvents
- useEffect(() => {
-   billData.forEach((bill) => {
-    console.log('bill billDataUE', bill)        //////////////////////////////////////////////////////////////
-    let date = moment(bill.dueDate).toDate();
-    const start = firstDayWeek;
-    const end = lastDayWeek;
-    if (date >= start && date <= end){
-      addWeeklyEvent(bill)
-    } 
-   })
- }, [billData])
-
-//looping over myEvents
-// useEffect(() => {
-//   myEvents.forEach((event) => {
-//     console.log('event myEvents UE', event)       ////////////////////////////////////////////////////////////
-//     let date = moment(event.dueDate).toDate();
-//     let start = firstDayWeek;
-//     let end = lastDayWeek;
-//     if (date >= start && date <= end) {
-//       addWeeklyEvent(event)
-//     }
-//   })
-// }, [billData])
-
-//4)looping over weekly events and adding the total amount of money due that week for bills, then creating a new event with a different colored flag to represent the total due that week
- useEffect(() => {
+  setMyEvents(bills)
   let total = 0;
-  weeklyEvents.forEach((event)  => {
-    console.log('event weeklyEvents UE', event)     //////////////////////////////////////////////////////////
-   total += Number(event.billAmount);
-   let date = new Date();
-   
-   const start = moment(date.setDate(date.getDate() - date.getDay()));
-   const end = moment(date.setDate(date.getDate() - date.getDay() + 6));
-   let totalOfEvents ={
-    id: event.id,
-    title: `Total for this week: $${total}`,
-    allDay: true,
-    start: start,
-    end: end,
-    hexColor: '50C878'
-  }
-   addTotalDue(totalOfEvents);
+  bills.forEach((bill) => {
+    let {  start, bill_amount } = bill;
+    let date = new Date(start)
+    if (date >= firstDay && date <= lastDay) {
+      total += Number(bill_amount)
+    }
   })
- },[weeklyEvents]);
- 
-//5)adding totalDue to events every time totalDue updates
- useEffect(() => {
-  addEvent(totalDue);
- }, [totalDue]);
+  let weeklyEvent = {
+    title: `Total due this week: $${total}`,
+    bill_amount: total,
+    start: firstDay,
+    end: lastDay,
+    hex_color: '50C878'
+  }
+  setMyEvents(prevEvents => [...prevEvents, weeklyEvent])
+},[bills])
 
  const eventStyleGetter = (event, start, end, isSelected) => {
-  var backgroundColor = '#' + event.hexColor;
+  var backgroundColor = '#' + event.hex_color;
   var style = {
       backgroundColor: backgroundColor,
       borderRadius: '0px',
@@ -142,14 +61,7 @@ const handleSelectEvent = (event) => {
   setModalState(true)
 }
 
-
-const childToParent = (childData) => {
-  // setChildData(childData)
-  // console.log('childData', childData)
-}
-
 const handleSelectSlot = (day) => {
-  // console.log('day', day)
     setCreateEventModalState(true)
     setCreateModalDay(day)
   }
@@ -163,7 +75,7 @@ const handleSelectSlot = (day) => {
   );
 
   
-   if (myEvents.length === 0) {
+   if (bills.length === 0) {
     return (
       <div>Please add a bill</div>
     );
@@ -181,9 +93,8 @@ const handleSelectSlot = (day) => {
          eventPropGetter={eventStyleGetter}
          scrollToTime={scrollToTime}
          />
-         <EventModal trigger={modalState} billData={billData} setBillData={setBillData} myEvents={myEvents} event={selectedEvent} setTrigger ={setModalState}/>
-      {/* {selectedEvent && <EventModal trigger={modalState} event={selectedEvent} setTrigger ={setModalState}/>} */}
-       <CreateEventModal trigger={createEventModalState} billData={billData} setBillData={setBillData} day={createModalDay} myEvents={myEvents} setEvents={setEvents} childToParent={childToParent} setTrigger={setCreateEventModalState}/>
+         <EventModal trigger={modalState} billData={bills} events={bills} event={selectedEvent} setTrigger ={setModalState}/>
+       <CreateEventModal trigger={createEventModalState} billData={bills} day={createModalDay} events={bills} setTrigger={setCreateEventModalState}/>
     </div>
     );
    };

@@ -1,15 +1,12 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import billReducer from '../features/billSlice';
-import eventReducer from '../features/eventSlice'
 import { devToolsEnhancer } from "redux-devtools-extension";
 
 export default configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
   reducer: {
-    bill: billReducer,
-    event: eventReducer
+    bill: billReducer
   },
-  devTools: [devToolsEnhancer({ realtime: true })],
-  // enhancers: 
+  devTools: [devToolsEnhancer({ realtime: true })]
 })
 

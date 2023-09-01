@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import moment from "moment";
 const { REACT_APP_BASE_URL } = process.env;
 
 export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
@@ -10,33 +11,30 @@ export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
       }
     })
       .then(res=> {
-        console.log('getBills res', res)
         return res.data;
       })
       .catch(err=>err)
-    })
+});
 
 
 export const addBill = createAsyncThunk('bills/addBills', async(values) => {
-     return await fetch(`${REACT_APP_BASE_URL}/api/v1/bills`, { method:"POST",
-     headers: {
+  return await fetch(`${REACT_APP_BASE_URL}/api/v1/bills`, { method:"POST",
+    headers: {
       "Content-Type": "application/json", 
       "Accept": "application/json"
-     },
-     body: JSON.stringify({
+    },
+    body: JSON.stringify({
       id: Math.random(),
-      billName: values.billName,
-      billAmount: values.billAmount,
-      dueDate: values.dueDate
-     })
-    }).then((res) => {
-      console.log('add res', res)
-      res.json();
-    }).catch((err) => {
-      console.log('err', err);
+      bill_name: values.bill_name,
+      bill_amount: values.bill_amount,
+      due_date: moment(new Date(values.due_date))
     })
-    }
-);
+  }).then((res) => {
+    res.json();
+  }).catch((err) => {
+    console.log('err', err);
+  })
+});
 
 export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAPI) => {
     await axios.delete(`${REACT_APP_BASE_URL}/api/v1/bills/${id}`, {
@@ -49,7 +47,6 @@ export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAP
      }
     })
     .then((res) => {
-      console.log('delete res', res)
       res.json();
     });
 });
@@ -98,8 +95,8 @@ export const billSlice = createSlice({
     });
 
     builder.addCase(deleteBill.fulfilled, (state, action) => {
-      const billId = action.payload
-      state.bills = state.bills.filter(bill => bill.id !== billId)
+      const bill_id = action.payload
+      state.bills = state.bills.filter(bill => bill.id !== bill_id)
       state.loading = false
       state.isSuccess = action.payload
     });
@@ -107,7 +104,7 @@ export const billSlice = createSlice({
     builder.addCase(deleteBill.rejected, (state, action) => {
       state.loading = false
       state.error = action.error.message
-    })
+    });
   }
 })
 

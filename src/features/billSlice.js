@@ -11,13 +11,13 @@ export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
       }
     })
       .then(res=> {
-        return res.data;
+        return res.data
       })
       .catch(err=>err)
 });
 
 
-export const addBill = createAsyncThunk('bills/addBills', async(values) => {
+export const addBill = createAsyncThunk('bills/addBill', async(values) => {
   return await fetch(`${REACT_APP_BASE_URL}/api/v1/bills`, { method:"POST",
     headers: {
       "Content-Type": "application/json", 
@@ -27,7 +27,7 @@ export const addBill = createAsyncThunk('bills/addBills', async(values) => {
       id: Math.random(),
       bill_name: values.bill_name,
       bill_amount: values.bill_amount,
-      due_date: moment(new Date(values.due_date))
+      due_date: values.due_date
     })
   }).then((res) => {
     res.json();
@@ -50,6 +50,26 @@ export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAP
       res.json();
     });
 });
+
+export const updateBill = createAsyncThunk('bills/updateBill', async(id, values) => {
+  await axios.delete(`${REACT_APP_BASE_URL}/api/v1/bills/${id}`, {
+  headers: {
+    "Content-Type": "application/json", 
+    "Accept": "application/json"
+   },
+   body: JSON.stringify({
+    id: Math.random(),
+    bill_name: values.bill_name,
+    bill_amount: values.bill_amount,
+    due_date: new Date(values.due_date)
+  })
+  })
+  .then((res) => {
+    res.json();
+  });
+});
+
+
 
 
 

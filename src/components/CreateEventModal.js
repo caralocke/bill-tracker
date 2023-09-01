@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addBill, getBills } from '../features/billSlice';
-import { useNavigate } from 'react-router-dom';
 import '../styles/CreateEventModal.css'
 import moment from 'moment';
 
 export default function CreateEventModal(props) {
-    console.log('create event props', props)
-    const bills = useSelector((state) => state.bill.bills)
-    const initialFormValues = {billName: '', billAmount:''}
+    const initialFormValues = {bill_name: '', bill_amount:''}
     const [inputValue, setInputValue] = useState(initialFormValues);
-    const [ newData, setNewData ] = useState(bills);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
 
     let newBill = {
-      id: Math.random(),
-      billName: inputValue.billName,
-      billAmount: inputValue.billAmount,
-      dueDate: moment(props.day.start).format('YYYY/MM/DD')
+      bill_name: inputValue.bill_name,
+      bill_amount: inputValue.bill_amount,
+      due_date: moment(new Date(props.day.start)).format('YYYY/MM/DD')
     }
-
-    console.log('createEventModal inputValue', inputValue)
-
-    console.log('createEventModal newBill', newBill)
 
     const handleChange = (e) => {
       setInputValue({...inputValue, [e.target.name]: e.target.value});
@@ -31,11 +21,9 @@ export default function CreateEventModal(props) {
 
     const onSubmit = async (e) => {
       e.preventDefault()
-      console.log('billData onsubmit', props.billData)
-      let result = await dispatch(addBill(newBill));
+      await dispatch(addBill(newBill));
       dispatch(getBills())
       props.setTrigger(false)
-      navigate('/bills')
     }
 
 
@@ -43,16 +31,16 @@ export default function CreateEventModal(props) {
     <div id='create-event-modal' className='create-event-modal'style={{zIndex: 1000}}>
         <div className='create-event-modal-inner'>
           <form onSubmit={onSubmit}>
-            <label>Add a New Bill that's due on {moment(props.start).format('MM/DD/YYYY')}   
+            <label>Add a New Bill that's due on {moment(new Date(props.start)).format('MM/DD/YYYY')}   
               <div className='bill-info-box'>
               <div className='billname-box'>
                 <label className='input-label'> Bill Name: </label>
-                  <input type='text' className='billname-input required' onChange={handleChange} name='billName' id='billName' placeholder='Enter bill name'/>                
+                  <input type='text' className='billname-input required' onChange={handleChange} name='bill_name' id='billName' placeholder='Enter bill name'/>                
               </div>
 
               <div className='billamount-box'>
                 <label className='input-label'> Amount: </label>
-                  <input type='text' className='billamount-input required' onChange={handleChange} name='billAmount' id='billAmount' data-type='currency' placeholder='$0.00'/>
+                  <input type='text' className='billamount-input required' onChange={handleChange} name='bill_amount' id='billAmount' data-type='currency' placeholder='$0.00'/>
               </div>
 
               <button className='submit-button'>Submit</button>

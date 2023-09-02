@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import moment from "moment";
 const { REACT_APP_BASE_URL } = process.env;
 
 export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
@@ -52,7 +51,7 @@ export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAP
 });
 
 export const updateBill = createAsyncThunk('bills/updateBill', async(id, values) => {
-  await axios.delete(`${REACT_APP_BASE_URL}/api/v1/bills/${id}`, {
+  await axios.delete(`http://localhost:3000/api/v1/bills/${id}`, {
   headers: {
     "Content-Type": "application/json", 
     "Accept": "application/json"

@@ -5,6 +5,7 @@ import moment from 'moment';
 import EventModal from './EventModal';
 import CreateEventModal from './CreateEventModal';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import CustomToolbar from './CustomToolbar';
 
 const localizer = momentLocalizer(moment);
 
@@ -20,51 +21,65 @@ export default function CalendarComponent() {
   const [ selectedEvent, setSelectedEvent ] = useState(undefined);
   const [ createModalDay, setCreateModalDay ] = useState('');
 
-
   useEffect(() => {
-  setMyEvents(bills)
-  let total = 0;
-  bills.forEach((bill) => {
-    let {  start, bill_amount } = bill;
-    let date = new Date(start)
-    if (date >= firstDay && date <= lastDay) {
-      total += Number(bill_amount)
+    setMyEvents(myEvents)
+    let total = 0;
+    let newBills =[]
+    bills.forEach((bill) => {
+      let { id, bill_name, bill_amount, title, start, end, hex_color } = bill;
+      let newBill = {
+        id,
+        bill_name,
+        bill_amount,
+        title,
+        start: new Date(start.replace(/-/g, '/')),
+        end: new Date(end.replace(/-/g, '/')),
+        hex_color
+      }
+      newBills.push(newBill)
+    })
+    setMyEvents(newBills)
+    bills.forEach((bill) => {
+      let {  start, bill_amount } = bill;
+      let date = new Date(start)
+      if (date >= firstDay && date <= lastDay) {
+        total += Number(bill_amount)
+      }
+    })
+    let weeklyEvent = {
+      title: `Total due this week: $${total}`,
+      bill_amount: total,
+      start: firstDay,
+      end: lastDay,
+      hex_color: '50C878'
     }
-  })
-  let weeklyEvent = {
-    title: `Total due this week: $${total}`,
-    bill_amount: total,
-    start: firstDay,
-    end: lastDay,
-    hex_color: '50C878'
-  }
-  setMyEvents(prevEvents => [...prevEvents, weeklyEvent])
-},[bills])
+    setMyEvents(prevEvents => [...prevEvents, weeklyEvent])
+  },[bills])
 
  const eventStyleGetter = (event, start, end, isSelected) => {
-  var backgroundColor = '#' + event.hex_color;
-  var style = {
+    var backgroundColor = '#' + event.hex_color;
+    var style = {
       backgroundColor: backgroundColor,
       borderRadius: '0px',
       opacity: 0.8,
       color: 'black',
       border: '0px',
       display: 'block'
-  };
-  return {
+    };
+    return {
       style: style
+    };
   };
-};
 
-const handleSelectEvent = (event) => {
-  setSelectedEvent(event)
-  setModalState(true)
-}
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event)
+    setModalState(true)
+  };
 
-const handleSelectSlot = (day) => {
+  const handleSelectSlot = (day) => {
     setCreateEventModalState(true)
     setCreateModalDay(day)
-  }
+  };
 
   const { defaultDate, scrollToTime } = useMemo(
     () => ({
@@ -87,9 +102,11 @@ const handleSelectSlot = (day) => {
          defaultView={Views.MONTH}
          events={myEvents}
          localizer={localizer}
+         startAccessor={(event) => {return new Date(event.start)}}
          onSelectEvent={handleSelectEvent}
          onSelectSlot={handleSelectSlot}
-         selectable
+         views={['month']}
+         components={{toolbar: CustomToolbar}}
          eventPropGetter={eventStyleGetter}
          scrollToTime={scrollToTime}
          />

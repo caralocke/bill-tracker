@@ -52,6 +52,15 @@
   font-size: 25px;
 }
 
+.rbc-btn-group button {
+  background-color: hotpink;
+}
+
+.edit-button {
+  border: 1px solid gray;
+  background-color: buttoncolor;
+}
+
 /* @media screen and (min-width: 321px) {
   .calendar-container {
     height: 250px;

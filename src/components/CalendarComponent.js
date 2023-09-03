@@ -9,9 +9,9 @@ import CustomToolbar from './CustomToolbar';
 
 const localizer = momentLocalizer(moment);
 
-let today = new Date();
-let firstDay = new Date(today.setDate(today.getDate() - today.getDay()));
-let lastDay = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+let firstDay = moment().startOf('week').toDate();
+let lastDay = moment().endOf('week').toDate();
+console.log('firstDay', firstDay)
 
 export default function CalendarComponent() {
   const bills = useSelector((state)=>state.bill.bills);
@@ -54,6 +54,7 @@ export default function CalendarComponent() {
       hex_color: '50C878'
     }
     setMyEvents(prevEvents => [...prevEvents, weeklyEvent])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[bills])
 
  const eventStyleGetter = (event, start, end, isSelected) => {
@@ -74,6 +75,7 @@ export default function CalendarComponent() {
   const handleSelectEvent = (event) => {
     setSelectedEvent(event)
     setModalState(true)
+    console.log('modalState', modalState)
   };
 
   const handleSelectSlot = (day) => {
@@ -105,7 +107,8 @@ export default function CalendarComponent() {
          startAccessor={(event) => {return new Date(event.start)}}
          onSelectEvent={handleSelectEvent}
          onSelectSlot={handleSelectSlot}
-         views={['month']}
+         selectable={true}
+         views={['month', 'day']}
          components={{toolbar: CustomToolbar}}
          eventPropGetter={eventStyleGetter}
          scrollToTime={scrollToTime}

@@ -43,6 +43,11 @@ export default function CreateEventModal(props) {
                   <input type='text' className='billamount-input required' onChange={handleChange} name='bill_amount' id='billAmount' data-type='currency' placeholder='$0.00'/>
               </div>
 
+              <div>
+                <label className='date-input-label'>Date</label>
+                <input type='date' onChange={handleChange} value={moment(new Date(props.day.start)).format('YYYY-MM-DD') ||''}/>
+              </div>
+
               <button className='submit-button'>Submit</button>
               </div>
             </label> 

@@ -4,21 +4,17 @@ import CalendarComponent from './components/CalendarComponent';
 import Navbar from './components/Navbar';
 import Bills from './components/Bills';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getBills } from './features/billSlice';
 import EditBillForm from './components/EditBillForm';
 
 const  App = () => {
-
-  const [ bills, setBills ] = useState([])
+  const bills = useSelector(state => state.bill.bills);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getBills())
-    .then(res => {
-      setBills(res.payload)
-    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
@@ -29,7 +25,7 @@ const  App = () => {
       <Routes>
         <Route exact path="/" element={<><Billform/> {bills.length === 0 ? (<div>Start by adding a bill</div>) : (<CalendarComponent/>)}</>}/>          
         <Route exact path='/bills' element={<Bills/>}/>        
-        <Route path='/bills/edit/:id' Component={props => <EditBillForm {...props} setBills={setBills}/>}></Route>
+        <Route path='/bills/edit/:id' Component={props => <EditBillForm {...props}/>}></Route>
       </Routes> 
       
       

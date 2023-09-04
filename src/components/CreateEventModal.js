@@ -12,7 +12,7 @@ export default function CreateEventModal(props) {
     let newBill = {
       bill_name: inputValue.bill_name,
       bill_amount: inputValue.bill_amount,
-      due_date: moment(new Date(props.day.start)).format('YYYY/MM/DD')
+      due_date: moment(new Date(props.day.start)).format('YYYY-MM-DD')
     }
 
     const handleChange = (e) => {

@@ -15,17 +15,20 @@ export default function EventModal(props) {
       await dispatch(deleteBill(id));
       props.setTrigger(false)
       dispatch(getBills())
+    } else {
+      props.setTrigger(false)
     }
   }
-  
+    
       return (props.trigger) ? ( 
         <div id='event-modal' className='event-modal' style={{zIndex: 800}}> 
             <div className='event-modal-inner'>
               <p className='event-title'>{props.event.title}</p>
               <p className='event-amount-due'>Amount: ${props.event.bill_amount}</p>
               <p className='event-due-date'>Due: {moment(new Date(props.event.start)).format('MM/DD/YYYY')}</p>
-              <button id='closeModal' className='modal-close-button' onClick={() => props.setTrigger(false)}>Close</button>
+              <span id='closeModal' className='modal-close-button' onClick={() => props.setTrigger(false)}>x</span>
               <button onClick={()=>handleDelete(props.event.id)}>Delete</button>
+              <a href={`/bills/edit/${props.event.id}`}><button>Edit</button></a>
             </div>
           </div>
       ) : '' ;

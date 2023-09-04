@@ -11,7 +11,6 @@ const localizer = momentLocalizer(moment);
 
 let firstDay = moment().startOf('week').toDate();
 let lastDay = moment().endOf('week').toDate();
-console.log('firstDay', firstDay)
 
 export default function CalendarComponent() {
   const bills = useSelector((state)=>state.bill.bills);
@@ -26,14 +25,15 @@ export default function CalendarComponent() {
     let total = 0;
     let newBills =[]
     bills.forEach((bill) => {
-      let { id, bill_name, bill_amount, title, start, end, hex_color } = bill;
+      let { id, bill_name, bill_amount, title, start, end, hex_color, due_date } = bill;
       let newBill = {
         id,
         bill_name,
         bill_amount,
+        due_date,
         title,
-        start: new Date(start.replace(/-/g, '/')),
-        end: new Date(end.replace(/-/g, '/')),
+        start: moment(start),
+        end: moment(end),
         hex_color
       }
       newBills.push(newBill)
@@ -55,7 +55,7 @@ export default function CalendarComponent() {
     }
     setMyEvents(prevEvents => [...prevEvents, weeklyEvent])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[bills])
+  },[bills]);
 
  const eventStyleGetter = (event, start, end, isSelected) => {
     var backgroundColor = '#' + event.hex_color;
@@ -66,16 +66,15 @@ export default function CalendarComponent() {
       color: 'black',
       border: '0px',
       display: 'block'
-    };
+    }
     return {
       style: style
-    };
+    }
   };
 
   const handleSelectEvent = (event) => {
     setSelectedEvent(event)
     setModalState(true)
-    console.log('modalState', modalState)
   };
 
   const handleSelectSlot = (day) => {
@@ -95,7 +94,7 @@ export default function CalendarComponent() {
    if (bills.length === 0) {
     return (
       <div>Please add a bill</div>
-    );
+    )
    } else {
     return (
       <div className='calendar-container' >
@@ -116,6 +115,6 @@ export default function CalendarComponent() {
          <EventModal trigger={modalState} billData={bills} events={bills} event={selectedEvent} setTrigger ={setModalState}/>
        <CreateEventModal trigger={createEventModalState} billData={bills} day={createModalDay} events={bills} setTrigger={setCreateEventModalState}/>
     </div>
-    );
-   };
+    )
+   }
 };

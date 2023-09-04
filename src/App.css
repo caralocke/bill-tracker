@@ -52,10 +52,6 @@
   font-size: 25px;
 }
 
-.rbc-btn-group button {
-  background-color: hotpink;
-}
-
 .edit-button {
   border: 1px solid gray;
   background-color: buttoncolor;

@@ -5,7 +5,6 @@ import moment from 'moment';
 import EventModal from './EventModal';
 import CreateEventModal from './CreateEventModal';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import CustomToolbar from './CustomToolbar';
 
 const localizer = momentLocalizer(moment);
 
@@ -32,8 +31,8 @@ export default function CalendarComponent() {
         bill_amount,
         due_date,
         title,
-        start: moment(date_start).format('YYYY-MM-DD, hh:mm:ss'),
-        end: moment(date_end).format('YYYY-MM-DD, hh:mm:ss'),
+        start: moment(date_start).set('hour', 9).format('YYYY-MM-DD, hh:mm:ss'),
+        end: moment(date_end).set('hour', 9).set('minute', 30).format('YYYY-MM-DD, hh:mm:ss'),
         hex_color
       }
       newBills.push(newBill)
@@ -103,12 +102,11 @@ export default function CalendarComponent() {
          defaultView={Views.MONTH}
          events={myEvents}
          localizer={localizer}
-         startAccessor={(event) => {return moment(new Date(event.start))}}
+         startAccessor={(event) => {return new Date(event.start)}}
          onSelectEvent={handleSelectEvent}
          onSelectSlot={handleSelectSlot}
          selectable={true}
-         views={['month', 'day']}
-         components={{toolbar: CustomToolbar}}
+         views={['month', 'day', 'week']}
          eventPropGetter={eventStyleGetter}
          scrollToTime={scrollToTime}
          />

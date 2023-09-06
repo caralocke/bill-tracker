@@ -19,16 +19,16 @@ export default function Bills() {
     <div className='bills-container'>
         <h3>Bills</h3>
         {bills.length > 0 ? bills.map(data => {
-          const { bill_name, bill_amount, id } = data
+          const { bill_name, bill_amount, bill_id } = data
           const date = moment(data.due_date).format('MM/DD/YYYY')
           return (
-            <div className='bill-container' key={id}>
+            <div className='bill-container' key={bill_id}>
               <div>
-                <div>Name: {bill_name}</div>
-                <div>Amount: {bill_amount}</div>
-                <div>Due Date: {date}</div>
+                <div>{bill_name}</div>
+                <div> ${bill_amount}</div>
+                <div>{date}</div>
               </div>
-              <button onClick={()=>handleClick(data.id)} className='delete-button'>Delete</button>
+              <button onClick={()=>handleClick(bill_id)} className='delete-button'>Delete</button>
             </div>
           ) 
         }): <div>Please add a bill</div>}

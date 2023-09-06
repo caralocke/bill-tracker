@@ -9,8 +9,8 @@ import CustomToolbar from './CustomToolbar';
 
 const localizer = momentLocalizer(moment);
 
-let firstDay = moment().startOf('week').toDate();
-let lastDay = moment().endOf('week').toDate();
+let firstDay = moment().startOf('week').format('YYYY-MM-DD, h:mm:ss');
+let lastDay = moment().endOf('week').format('YYYY-MM-DD, h:mm:ss');
 
 export default function CalendarComponent() {
   const bills = useSelector((state)=>state.bill.bills);
@@ -25,23 +25,23 @@ export default function CalendarComponent() {
     let total = 0;
     let newBills =[]
     bills.forEach((bill) => {
-      let { id, bill_name, bill_amount, title, start, end, hex_color, due_date } = bill;
+      let { bill_id, bill_name, bill_amount, title, date_start, date_end, hex_color, due_date } = bill;
       let newBill = {
-        id,
+        bill_id,
         bill_name,
         bill_amount,
         due_date,
         title,
-        start: moment(start),
-        end: moment(end),
+        start: moment(date_start).format('YYYY-MM-DD, hh:mm:ss'),
+        end: moment(date_end).format('YYYY-MM-DD, hh:mm:ss'),
         hex_color
       }
       newBills.push(newBill)
     })
     setMyEvents(newBills)
     bills.forEach((bill) => {
-      let {  start, bill_amount } = bill;
-      let date = new Date(start)
+      let {  due_date, bill_amount } = bill;
+      let date = moment(new Date(due_date)).format('YYYY-MM-DD, h:mm:ss')
       if (date >= firstDay && date <= lastDay) {
         total += Number(bill_amount)
       }
@@ -103,7 +103,7 @@ export default function CalendarComponent() {
          defaultView={Views.MONTH}
          events={myEvents}
          localizer={localizer}
-         startAccessor={(event) => {return new Date(event.start)}}
+         startAccessor={(event) => {return moment(new Date(event.start))}}
          onSelectEvent={handleSelectEvent}
          onSelectSlot={handleSelectSlot}
          selectable={true}

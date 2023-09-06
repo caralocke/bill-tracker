@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { v4 as uuid } from 'uuid';
 const { REACT_APP_BASE_URL } = process.env;
 
 export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
-    return axios.get(`${REACT_APP_BASE_URL}/api/v1/bills`, {
+    return axios.get(`${REACT_APP_BASE_URL}/bills`, {
       headers: {
         "Content-Type" : "application/json",
         "Accept" : "application/json"
@@ -15,14 +16,14 @@ export const getBills = createAsyncThunk('bills/getBills', async (thunkAPI) => {
       .catch(err=>err)
 });
 
-export const getBill = createAsyncThunk('bills/getBill', async(id, thunkAPI) => {
-  return await axios.get(`${REACT_APP_BASE_URL}/api/v1/bills/${id}`, {
+export const getBill = createAsyncThunk('bills/getBill', async(bill_id, thunkAPI) => {
+  return await axios.get(`${REACT_APP_BASE_URL}/bills/${bill_id}`, {
     headers: {
       "Content-Type": "application/json", 
       "Accept": "application/json"
      },
      body: {
-      id
+      bill_id
      }
   })
   .then((res) => {
@@ -32,13 +33,13 @@ export const getBill = createAsyncThunk('bills/getBill', async(id, thunkAPI) => 
 
 
 export const addBill = createAsyncThunk('bills/addBill', async(values) => {
-  return await fetch(`${REACT_APP_BASE_URL}/api/v1/bills`, { method:"POST",
+  return await fetch(`${REACT_APP_BASE_URL}/bills`, { method:"POST",
     headers: {
       "Content-Type": "application/json", 
       "Accept": "application/json"
     },
     body: JSON.stringify({
-      id: Math.random(),
+      bill_id: uuid(),
       bill_name: values.bill_name,
       bill_amount: values.bill_amount,
       due_date: values.due_date
@@ -50,14 +51,14 @@ export const addBill = createAsyncThunk('bills/addBill', async(values) => {
   })
 });
 
-export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAPI) => {
-    await axios.delete(`${REACT_APP_BASE_URL}/api/v1/bills/${id}`, {
+export const deleteBill = createAsyncThunk('bills/deleteBill', async(bill_id, thunkAPI) => {
+    await axios.delete(`${REACT_APP_BASE_URL}/bills/${bill_id}`, {
     headers: {
       "Content-Type": "application/json", 
       "Accept": "application/json"
      },
      body: {
-      id
+      bill_id
      }
     })
     .then((res) => {
@@ -66,13 +67,13 @@ export const deleteBill = createAsyncThunk('bills/deleteBill', async(id, thunkAP
 });
 
 export const updateBill = createAsyncThunk('bills/updateBill', async(bill) => {
-  await fetch(`${REACT_APP_BASE_URL}/api/v1/bills/${bill.id}`, { method: "PUT",
+  await fetch(`${REACT_APP_BASE_URL}/bills/${bill.bill_id}`, { method: "PUT",
   headers: {
     "Content-Type": "application/json", 
     "Accept": "application/json"
    },
    body: JSON.stringify({
-    id: bill.id,
+    bill_id: bill.bill_id,
     bill_name: bill.bill_name,
     bill_amount: bill.bill_amount,
     due_date: bill.due_date

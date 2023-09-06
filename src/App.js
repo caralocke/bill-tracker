@@ -5,14 +5,13 @@ import Navbar from './components/Navbar';
 import Bills from './components/Bills';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getBills } from './features/billSlice';
 import EditBillForm from './components/EditBillForm';
 
 const  App = () => {
   const bills = useSelector(state => state.bill.bills);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getBills())
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -5,6 +5,7 @@ import { getBill, updateBill, getBills } from '../features/billSlice';
 
 export default function EditBillForm() {
   const { id } = useParams();
+  console.log('id', id)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialFormValues = {bill_name: '', bill_amount: '', due_date: '' };
@@ -13,7 +14,7 @@ export default function EditBillForm() {
   useEffect(() => {
     dispatch(getBill(id))
     .then((res) => {
-      setBill(res.payload)
+      setBill(res.payload[0])
     })
   }, [dispatch, id]);
   const handleChange = (e) => {

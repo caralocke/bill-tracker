@@ -89,12 +89,6 @@ export default function CalendarComponent() {
     []
   );
 
-  
-   if (bills.length === 0) {
-    return (
-      <div>Please add a bill</div>
-    )
-   } else {
     return (
       <div className='calendar-container' >
       <Calendar 
@@ -115,4 +109,3 @@ export default function CalendarComponent() {
     </div>
     )
    }
-};

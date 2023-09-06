@@ -144,3 +144,18 @@
   background-color: #555658;
 }
 
+.logo {
+  padding-left: 10%;
+}
+
+.links {
+  padding-right: 10%;
+}
+
+.gif-container {
+  margin: auto;
+  height: 600px;
+  width: 70%;
+  max-width: 1000px;
+}
+

@@ -41,6 +41,7 @@
   margin: auto;
   height: 600px;
   width: 70%;
+  max-width: 1000px;
 }
 
 .rbc-calendar {

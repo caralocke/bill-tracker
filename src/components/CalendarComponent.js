@@ -24,13 +24,13 @@ export default function CalendarComponent() {
     let total = 0;
     let newBills =[]
     bills.forEach((bill) => {
-      let { bill_id, bill_name, bill_amount, title, date_start, date_end, hex_color, due_date } = bill;
+      let { bill_id, bill_name, bill_amount, date_start, date_end, hex_color, due_date } = bill;
       let newBill = {
         bill_id,
         bill_name,
         bill_amount,
         due_date,
-        title,
+        title: `${bill_name}: $${bill_amount}`,
         start: moment(date_start).set('hour', 9).format('YYYY-MM-DD, hh:mm:ss'),
         end: moment(date_end).set('hour', 9).set('minute', 30).format('YYYY-MM-DD, hh:mm:ss'),
         hex_color

@@ -18,7 +18,7 @@ export default function Bills() {
   return (
     <div className='bills-container'>
         <h3>Bills</h3>
-        {bills.length > 0 ? bills.map(data => {
+        {bills.map(data => {
           const { bill_name, bill_amount, bill_id } = data
           const date = moment(data.due_date).format('MM/DD/YYYY')
           return (
@@ -31,7 +31,7 @@ export default function Bills() {
               <button onClick={()=>handleClick(bill_id)} className='delete-button'>Delete</button>
             </div>
           ) 
-        }): <div>Please add a bill</div>}
+        })}
       </div>
   )
 }

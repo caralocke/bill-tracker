@@ -39,11 +39,8 @@ export default function CalendarComponent() {
     })
     setMyEvents(newBills)
     bills.forEach((bill) => {
-      console.log('bill', bill)
       let {  due_date, bill_amount } = bill;
-      console.log('due_date', due_date)
       let date = moment(due_date).format('YYYY-MM-DD, h:mm:ss')
-      console.log('date', date)
       if (date >= firstDay && date <= lastDay) {
         total += Number(bill_amount)
       }

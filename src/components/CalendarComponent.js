@@ -8,8 +8,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
-let firstDay = moment().startOf('week').format('YYYY-MM-DD, h:mm:ss');
-let lastDay = moment().endOf('week').format('YYYY-MM-DD, h:mm:ss');
+let firstDay = moment().startOf('week').format('YYYY-MM-DD, HH:mm:ss');
+let lastDay = moment().endOf('week').format('YYYY-MM-DD, HH:mm:ss');
 
 export default function CalendarComponent() {
   const bills = useSelector((state)=>state.bill.bills);
@@ -31,8 +31,8 @@ export default function CalendarComponent() {
         bill_amount,
         due_date,
         title: `${bill_name}: $${bill_amount}`,
-        start: moment(date_start).set('hour', 9).format('YYYY-MM-DD, hh:mm:ss'),
-        end: moment(date_end).set('hour', 9).set('minute', 30).format('YYYY-MM-DD, hh:mm:ss'),
+        start: moment(date_start).set('hour', 9).format('YYYY-MM-DD, HH:mm:ss'),
+        end: moment(date_end).set('hour', 9).set('minute', 30).format('YYYY-MM-DD, HH:mm:ss'),
         hex_color
       }
       newBills.push(newBill)
@@ -40,7 +40,7 @@ export default function CalendarComponent() {
     setMyEvents(newBills)
     bills.forEach((bill) => {
       let {  due_date, bill_amount } = bill;
-      let date = moment(due_date).format('YYYY-MM-DD, h:mm:ss')
+      let date = moment(due_date).set('hour', 9).format('YYYY-MM-DD, HH:mm:ss')
       if (date >= firstDay && date <= lastDay) {
         total += Number(bill_amount)
       }

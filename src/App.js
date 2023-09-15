@@ -27,7 +27,7 @@ const  App = () => {
     <div className="App">
       <Navbar/>
       <Routes>
-        <Route exact path="/" element={<><Billform/> {bills.length === 0 ? (<div className='gif-container'><img src={demo} alt='demo'/></div>) : (<CalendarComponent/>)}</>}/>          
+        <Route exact path="/" element={<><Billform/> {!state.loading && bills.length === 0 ? (<div className='gif-container'><img src={demo} alt='demo'/></div>) : (<CalendarComponent/>)}</>}/>          
         <Route exact path='/bills' element={<Bills/>}/>        
         <Route path='/bills/edit/:id' Component={props => <EditBillForm {...props}/>}></Route>
       </Routes> 

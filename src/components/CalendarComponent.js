@@ -8,11 +8,11 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
-let firstDay = moment().startOf('week').format('YYYY-MM-DD, HH:mm:ss');
-let lastDay = moment().endOf('week').format('YYYY-MM-DD, HH:mm:ss');
+let firstDay = moment().startOf('week').toDate();
+let lastDay = moment().endOf('week').toDate();
 
 export default function CalendarComponent() {
-  const bills = useSelector((state)=>state.bill.bills);
+  const bills = useSelector((state)=>state.bill?.bills);
   const [ myEvents, setMyEvents ] = useState([]);
   const [ modalState, setModalState ] = useState(false);
   const [ createEventModalState, setCreateEventModalState ] = useState(false);
@@ -31,8 +31,8 @@ export default function CalendarComponent() {
         bill_amount,
         due_date,
         title: `${bill_name}: $${bill_amount}`,
-        start: moment(date_start).set('hour', 9).format('YYYY-MM-DD, HH:mm:ss'),
-        end: moment(date_end).set('hour', 9).set('minute', 30).format('YYYY-MM-DD, HH:mm:ss'),
+        start: moment(date_start).set('hour', 9).toDate(),
+        end: moment(date_end).set('hour', 9).set('minute', 30).toDate(),
         hex_color
       }
       newBills.push(newBill)
@@ -40,7 +40,7 @@ export default function CalendarComponent() {
     setMyEvents(newBills)
     bills.forEach((bill) => {
       let {  due_date, bill_amount } = bill;
-      let date = moment(due_date).set('hour', 9).format('YYYY-MM-DD, HH:mm:ss')
+      let date = moment(due_date).toDate()
       if (date >= firstDay && date <= lastDay) {
         total += Number(bill_amount)
       }
@@ -96,7 +96,7 @@ export default function CalendarComponent() {
          defaultView={Views.MONTH}
          events={myEvents}
          localizer={localizer}
-         startAccessor={(event) => {return new Date(event.start)}}
+         startAccessor="start"
          onSelectEvent={handleSelectEvent}
          onSelectSlot={handleSelectSlot}
          selectable={true}

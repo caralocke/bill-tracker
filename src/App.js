@@ -8,19 +8,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getBills } from './features/billSlice';
 import EditBillForm from './components/EditBillForm';
-import demo from './styles/icons/demo.gif'
+import demo from './styles/icons/demo.gif';
+import Loader from './components/Loader';
 
 const  App = () => {
   const bills = useSelector(state => state.bill.bills);
+  const state = useSelector(state => state.bill);
   const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(getBills())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[dispatch]);
  
 
-  return (
+  return ( state.loading ? (
+    <Loader/>
+  ) :
     <div className="App">
       <Navbar/>
       <Routes>
@@ -31,7 +34,7 @@ const  App = () => {
       
       
     </div>
-  );
+  )  
 }
 
 export default App;

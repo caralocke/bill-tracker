@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deleteBill, getBills } from '../features/billSlice';
 
 export default function EventModal(props) {
+  console.log(props.event)
   const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
@@ -21,9 +22,9 @@ export default function EventModal(props) {
   }
     
       return (props.trigger) ? ( 
-        <div id='event-modal' className='event-modal' style={{zIndex: 800}}> 
+        <div id='event-modal' className='event-modal' onClick={() => props.setTrigger(false)} style={{zIndex: 800}}> 
             <div className='event-modal-inner'>
-              <p className='event-title'>{props.event.title}</p>
+              <p className='event-title'>Name: {props.event.bill_name}</p>
               <p className='event-amount-due'>Amount: ${props.event.bill_amount}</p>
               <p className='event-due-date'>Due: {moment(new Date(props.event.start)).format('MM/DD/YYYY')}</p>
               <span id='closeModal' className='modal-close-button' onClick={() => props.setTrigger(false)}>x</span>

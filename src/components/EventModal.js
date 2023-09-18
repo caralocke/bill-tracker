@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { deleteBill, getBills } from '../features/billSlice';
 
 export default function EventModal(props) {
-  console.log(props.event)
   const dispatch = useDispatch();
 
   const handleDelete = async (id) => {

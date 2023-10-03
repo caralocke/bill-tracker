@@ -45,7 +45,7 @@ export default function EditBillForm() {
         </div>        
         <div>
           <label>Due Date:</label>
-          <input type='date' name='due_date' placeholder={due_date} value={due_date} onChange={handleChange}/>
+          <input type='date' name='due_date' min={new Date().toISOString().split('T')[0]} placeholder={due_date} value={due_date} onChange={handleChange}/>
         </div>
         <div>
           <button>Submit</button>

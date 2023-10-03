@@ -78,8 +78,6 @@ export default function CalendarComponent() {
   };
 
   const handleSelectSlot = (day) => {
-    console.log('day', day)
-    console.log('date', new Date())
     if (day.start < new Date()) {
       alert("You cannot set a bill to a past date")
     } else {

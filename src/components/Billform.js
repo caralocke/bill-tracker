@@ -66,7 +66,7 @@ const Billform = () => {
 
               <div className='duedate-box'>
                 <label className='input-label'> Due date: </label>
-                  <input type='date' className='date-input required' onKeyUp={enableSubmit} value={inputValue.due_date} selected={inputValue.due_date} onChange={handleChange} name="due_date" id='dueDate'/>
+                  <input type='date' className='date-input required' min={new Date().toISOString().split('T')[0]} onKeyUp={enableSubmit} value={inputValue.due_date} selected={inputValue.due_date} onChange={handleChange} name="due_date" id='dueDate'/>
               </div>
 
               <div className='billamount-box'>

@@ -56,6 +56,7 @@ export default function CalendarComponent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[bills]);
 
+
  const eventStyleGetter = (event, start, end, isSelected) => {
     var backgroundColor = '#' + event.hex_color;
     var style = {
@@ -77,8 +78,14 @@ export default function CalendarComponent() {
   };
 
   const handleSelectSlot = (day) => {
-    setCreateEventModalState(true)
-    setCreateModalDay(day)
+    console.log('day', day)
+    console.log('date', new Date())
+    if (day.start < new Date()) {
+      alert("You cannot set a bill to a past date")
+    } else {
+      setCreateEventModalState(true)
+      setCreateModalDay(day)
+    }
   };
 
   const { defaultDate, scrollToTime } = useMemo(

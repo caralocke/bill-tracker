@@ -45,7 +45,7 @@ export default function CreateEventModal(props) {
 
               <div>
                 <label className='date-input-label'>Date</label>
-                <input type='date' onChange={handleChange} value={moment(new Date(props.day.start)).format('YYYY-MM-DD') ||''}/>
+                <input type='date' onChange={handleChange} min={new Date().toISOString().split('T')[0]} value={moment(new Date(props.day.start)).format('YYYY-MM-DD') ||''}/>
               </div>
 
               <button className='submit-button'>Submit</button>
